@@ -1,0 +1,6 @@
+doc
+/.vs/*
+package-lock.json
+*.log
+typings
+node_modules
