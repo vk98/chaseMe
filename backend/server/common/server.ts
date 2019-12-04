@@ -5,7 +5,6 @@ import bodyParser from 'body-parser';
 import http from 'http';
 import os from 'os';
 import cookieParser from 'cookie-parser';
-import swaggerify from './swagger';
 import l from './logger';
 import Mongoose from './mongoose'
 
@@ -23,7 +22,7 @@ export default class ExpressServer {
   }
 
   router(routes: (app: Application) => void): ExpressServer {
-    swaggerify(app, routes);
+    routes(app);
     return this;
   }
 
