@@ -1,45 +1,44 @@
 import Request from './http/HTTPRequest.service'
-export class UsersServiceAPI {
+export class LocationsServiceAPI {
     
-    getUsersList() {
+    getLocationsList() {
         return Request({
-            url: `/users`,
+            url: `/locations`,
             method: 'GET'
         });
     }
     /**@param { string } id  */
-    getUser(id){
+    getLocation(id){
         return Request({
-            url: `/users/${id}`,
+            url: `/locations/${id}`,
             method: 'GET'
         });
     }
 
     /**@param { { email: string } } data *///TODO
-    createUser(data){
+    createLocation(data){
         return Request({
-            url: `/users/`,
+            url: `/locations/`,
             method: 'POST'
         });
     }
 
-    
-    updateUser(user) {
+    updateLocation(location) {
         return Request({
-            url: `/users/${id}`,
+            url: `/locations/${id}`,
             method: 'PATCH',
-            data: user
+            data: location
         });
     }
 
     /** @param { string } id */
-    deleteUser(id) {
+    deleteLocation(id) {
         return Request({
-            url: `/users/${id}`,
+            url: `/locations/${id}`,
             method: 'DELETE'
         });
     }
 
 }
 
-module.exports = new UsersServiceAPI();
+module.exports = new LocationsServiceAPI();

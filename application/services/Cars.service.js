@@ -1,45 +1,44 @@
 import Request from './http/HTTPRequest.service'
-export class UsersServiceAPI {
+export class CarsServiceAPI {
     
-    getUsersList() {
+    getCarsList() {
         return Request({
-            url: `/users`,
+            url: `/cars`,
             method: 'GET'
         });
     }
     /**@param { string } id  */
-    getUser(id){
+    getCar(id){
         return Request({
-            url: `/users/${id}`,
+            url: `/cars/${id}`,
             method: 'GET'
         });
     }
 
     /**@param { { email: string } } data *///TODO
-    createUser(data){
+    createCar(data){
         return Request({
-            url: `/users/`,
+            url: `/cars/`,
             method: 'POST'
         });
     }
 
-    
-    updateUser(user) {
+    updateCar(car) {
         return Request({
-            url: `/users/${id}`,
+            url: `/cars/${id}`,
             method: 'PATCH',
-            data: user
+            data: car
         });
     }
 
     /** @param { string } id */
-    deleteUser(id) {
+    deleteCar(id) {
         return Request({
-            url: `/users/${id}`,
+            url: `/cars/${id}`,
             method: 'DELETE'
         });
     }
 
 }
 
-module.exports = new UsersServiceAPI();
+module.exports = new CarsServiceAPI();

@@ -16,7 +16,7 @@ const Request = async function (options, isHeader = true) {
   }
 
   const client = axios.create({
-    baseURL: {Config.BASE_URL},
+    baseURL: Config.BASE_URL,
     headers: { 'Authorization': authHeader }
 
   });
