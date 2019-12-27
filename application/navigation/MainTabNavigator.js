@@ -4,7 +4,7 @@ import { StyleSheet, Text } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/Home';
+import Swipe from '../screens/Swipe';
 import MatchesScreen from '../screens/Matches';
 import MessagesScreen from '../screens/Messages';
 import ProfileScreen from '../screens/Profile';
@@ -12,7 +12,7 @@ import ProfileScreen from '../screens/Profile';
 const App = createBottomTabNavigator(
 	{
 		Explore: {
-			screen: HomeScreen,
+			screen: Swipe,
 			navigationOptions: {
 				tabBarIcon: ({ focused, tintColor }) => {
 					const iconFocused = focused ? '#7444C0' : '#363636';

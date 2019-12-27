@@ -6,7 +6,7 @@ import Filters from '../components/Filters';
 import CardItem from '../components/CardItem';
 import Demo from '../assets/data/demo.js';
 
-class Home extends React.Component {
+class Swipe extends React.Component {
 	static navigationOptions = {
 		header: null
 	};
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default Home;
+export default Swipe;
