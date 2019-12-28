@@ -8,10 +8,10 @@ import Paragraph from '../../components/login/Paragraph';
 const HomeScreen = ({ navigation }) => (
   <Background>
     <Logo />
-    <Header>Login Template</Header>
+    <Header>Chase Me</Header>
 
     <Paragraph>
-      The easiest way to start with your amazing application.
+      Challenge. Race. Win.
     </Paragraph>
     <Button mode="contained" onPress={() => navigation.navigate('LoginScreen')}>
       Login
@@ -21,6 +21,9 @@ const HomeScreen = ({ navigation }) => (
       onPress={() => navigation.navigate('RegisterScreen')}
     >
       Sign Up
+    </Button>
+    <Button mode="contained" onPress={() => navigation.navigate('LoginScreen')}>
+      Facebook
     </Button>
   </Background>
 );

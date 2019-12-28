@@ -8,11 +8,12 @@ import Swipe from '../screens/Swipe';
 import MatchesScreen from '../screens/Matches';
 import MessagesScreen from '../screens/Messages';
 import ProfileScreen from '../screens/Profile';
+import Map from '../screens/Map';
 
 const App = createBottomTabNavigator(
 	{
 		Explore: {
-			screen: Swipe,
+			screen: Map,
 			navigationOptions: {
 				tabBarIcon: ({ focused, tintColor }) => {
 					const iconFocused = focused ? '#7444C0' : '#363636';

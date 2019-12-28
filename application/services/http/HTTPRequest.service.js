@@ -24,7 +24,7 @@ const Request = async function (options, isHeader = true) {
   const onSuccess = function (response) {
 
     console.debug('Request Successful!', response);
-    return response.data;
+    return JSON.parse(response.data);
   }
 
   const onError = function (error) {
