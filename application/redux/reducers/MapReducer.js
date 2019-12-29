@@ -7,7 +7,7 @@ const initialState = {
             description: "Default description",
             latlng: {
                 lat: 37.78825,
-                lng: -122.4324,
+                lng: 42.4324,
             }
         }
     ],

@@ -1,5 +1,5 @@
 import React from 'react';
-import { MapView, Marker } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 import {
 	StyleSheet,
 	ScrollView,
@@ -15,14 +15,14 @@ import { connect } from 'react-redux';
 import { getMapMarkers } from '../redux/actions/MapActions';
 
 class Map extends React.Component {
-	
+
 	constructor(props) {
 		super(props);
 		this.props.getMapMarkers();
 		// this.myPosition = {};
 		let initRegion = {
 			latitude: 37.78825,
-			longitude: -122.4324,
+			longitude: 42.4324,
 			latitudeDelta: 0.0922,
 			longitudeDelta: 0.0421,
 		};
@@ -31,43 +31,59 @@ class Map extends React.Component {
 		}
 		//this.onRegionChange = this.onRegionChange.bind(this);
 	}
-	
+
 	static navigationOptions = {
 		header: null
 	};
 	componentDidUpdate = (nextProps) => {
-		this.props.markers = nextProps.markers ? nextProps.markers : null;
-		this.props.region = nextProps.region ? nextProps.region : null;
-		this.props.myPosition = nextProps.myPosition ? nextProps.myPosition : null;
+		// this.props.markers = nextProps.markers ? nextProps.markers : null;
+		// this.props.region = nextProps.region ? nextProps.region : null;
+		// this.props.myPosition = nextProps.myPosition ? nextProps.myPosition : null;
 	}
 	onRegionChange = (region) => {
-		if(region)this.setState({ region });
+		//this.setState({ region });
 	}
 	render() {
 		return (
-			
+			<View style={styles.container}>
 				<MapView
+					style={styles.map}
+					provider="google"
 					region={this.state.region}
-					onRegionChange={this.onRegionChange.bind(this)}>
-					{this.props.markers.map(marker => (
+					onRegionChange={this.onRegionChange}>
+					{this.props.markers.map((marker,index) => (
 						<Marker
-							coordinate={{latitude: marker.latlng.lat, longitude: marker.latlng.lng}}
+							key="index"
+							coordinate={{ latitude: marker.latlng.lat, longitude: marker.latlng.lng }}
 							title={marker.title}
 							description={marker.description}
 						/>
 					))}
 
 				</MapView>
+			</View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
 	container: {
-		justifyContent: 'space-between',
-		flex: 1,
-		paddingHorizontal: 10
-	},
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+		justifyContent: 'flex-end',
+		alignItems: 'center',
+		flex: 1
+	  },
+	  map: {
+		position: 'absolute',
+		top: 0,
+		left: 0,
+		right: 0,
+		bottom: 0,
+	  },
 	bg: {
 		flex: 1,
 		resizeMode: 'cover',
