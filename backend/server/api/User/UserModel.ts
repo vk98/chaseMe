@@ -10,6 +10,8 @@ export interface IUserModel extends mongoose.Document {
     email: string;
     socialNetworkId: string;
     friends: string[];
+    address: string;
+    description: string;
     createdAt: Date;
     updatedAt: Date;
 };
@@ -20,7 +22,9 @@ const schema = new Schema({
   password: String,
   email: String,
   socialNetworkId: String,
-  friends: Array
+  friends: Array,
+  address: String,
+  description: String
 },
 {
     timestamps: true
