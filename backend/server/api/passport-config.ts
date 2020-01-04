@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 function initialize(passport) {
     const authenticateUser = async (email, password, done) => {
         const user = await UserService.findByEmail(email);
-        console.log(`passpconfig user : ${user}`)
+        //console.log(`passpconfig user : ${user}`)
         if (!user) {
             return done(null, false, { message: "A user with that email doesn't exist" });
         }
@@ -17,7 +17,7 @@ function initialize(passport) {
             }
             return done(null, false, { message: "Incorrect password" });
         } catch (err) {
-            done(err);
+            return done(err);
         }
     }
 

@@ -7,11 +7,11 @@ const jwt = require('jsonwebtoken')
 export class Controller {
 
   async login(req: Request, res: Response, next: NextFunction) {
-    const username = req.body.username
-    const user = { name: username }
+    let user = await UserService.findByEmail(req.body.email);
+    const name = { name: req.body.email }
 
-    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
-    res.json({ accessToken: accessToken})
+    const accessToken = jwt.sign(name, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
+    res.json({ accessToken: accessToken, user: user })
   }
 
   async all(req: Request, res: Response, next: NextFunction) {
