@@ -55,11 +55,11 @@ export class UserService {
     }
   }
 
-  async patch(id: string, userData: IUserModel): Promise<IUserModel> {
-    L.info(`update user with id ${id} with data ${userData}`);
+  async update(id: string, query: any): Promise<IUserModel> {
+    L.info(`update user with id ${id} with data ${JSON.stringify(query)}`);
 
     const doc = await User
-      .findOneAndUpdate({ _id: id }, { $set: userData }, { new: true })
+      .findOneAndUpdate({ _id: id }, query, { new: true })
       .lean()
       .exec() as IUserModel;
 

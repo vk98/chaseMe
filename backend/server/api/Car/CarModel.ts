@@ -8,6 +8,7 @@ export interface ICarModel extends mongoose.Document {
     brand: string;
     carModel: string;
     hp: number;
+    userId: string;
     createdAt: Date;
     updatedAt: Date;
 };
@@ -16,7 +17,8 @@ const schema = new Schema({
   name: String,
   brand: String,
   model: String,
-  hp: Number
+  hp: Number,
+  userId: String
 },
 {
     timestamps: true

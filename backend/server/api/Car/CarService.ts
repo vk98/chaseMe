@@ -34,7 +34,7 @@ export class CarsService {
   }
 
   async create(carData: ICarModel): Promise<ICarModel> {
-    L.info(`create car with data ${carData}`);
+    L.info(`create car with data ${JSON.stringify(carData)}`);
 
     const car = new Car(carData);
 
