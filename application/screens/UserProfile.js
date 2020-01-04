@@ -11,6 +11,10 @@ import {
 import ProfileItem from '../components/ProfileItem';
 import Demo from '../assets/data/demo.js';
 
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getUserData, setUserData } from '../redux/actions/UserActions';
+
 class UserProfile extends React.Component {
     constructor(props){
         super(props);
