@@ -9,3 +9,7 @@ export const GET_MAP_PING = 'GET_MAP_PING';
 
 //notifications
 // export const
+
+//User actions
+export const GET_USER_DATA = 'GET_USER_DATA';
+export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
