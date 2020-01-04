@@ -1,5 +1,5 @@
 import Request from './http/HTTPRequest.service'
-export class UsersServiceAPI {
+export class UserServiceAPI {
     
     getUsersList() {
         return Request({
@@ -42,4 +42,4 @@ export class UsersServiceAPI {
 
 }
 
-module.exports = new UsersServiceAPI();
+module.exports = new UserServiceAPI();

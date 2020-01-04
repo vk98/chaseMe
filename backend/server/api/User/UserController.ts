@@ -1,12 +1,22 @@
-import UsersService from './UserService';
+import UserService from './UserService';
 import { Request, Response, NextFunction } from 'express';
 import * as HttpStatus from 'http-status-codes';
+import * as bcrypt from 'bcryptjs';
+const jwt = require('jsonwebtoken')
 
 export class Controller {
 
+  async login(req: Request, res: Response, next: NextFunction) {
+    const username = req.body.username
+    const user = { name: username }
+
+    const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1d' })
+    res.json({ accessToken: accessToken})
+  }
+
   async all(req: Request, res: Response, next: NextFunction) {
     try {
-      const docs = await UsersService.all();
+      const docs = await UserService.all();
       return res.status(HttpStatus.OK).json(docs);
     }
     catch (err) {
@@ -16,7 +26,7 @@ export class Controller {
 
   async byId(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await UsersService.byId(req.params.id);
+      const doc = await UserService.byId(req.params.id);
       return res.status(HttpStatus.OK).json(doc);
     }
     catch (err) {
@@ -26,7 +36,8 @@ export class Controller {
 
   async create(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await UsersService.create(req.body);
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+      const doc = await UserService.create(req.body);
       return res.status(HttpStatus.CREATED).json(doc);
     }
     catch (err) {
@@ -36,7 +47,7 @@ export class Controller {
 
   async patch(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await UsersService.patch(req.params.id, req.body);
+      const doc = await UserService.patch(req.params.id, req.body);
       return res.status(HttpStatus.OK).json(doc);
     }
     catch (err) {
@@ -46,7 +57,7 @@ export class Controller {
 
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await UsersService.remove(req.params.id);
+      const doc = await UserService.remove(req.params.id);
       return res.status(HttpStatus.NO_CONTENT).send();
     }
     catch (err) {
