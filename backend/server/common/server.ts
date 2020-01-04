@@ -6,7 +6,10 @@ import http from 'http';
 import os from 'os';
 import cookieParser from 'cookie-parser';
 import l from './logger';
-import Mongoose from './mongoose'
+import Mongoose from './mongoose';
+const passport = require('passport');
+const initializePassport = require('../api/passport-config');
+initializePassport(passport);
 
 const app = express();
 const mongoose = new Mongoose;
@@ -19,6 +22,8 @@ export default class ExpressServer {
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(cookieParser(process.env.SESSION_SECRET));
     app.use(express.static(`${root}/public`));
+    app.use(passport.initialize());
+    app.use(passport.session());
   }
 
   router(routes: (app: Application) => void): ExpressServer {

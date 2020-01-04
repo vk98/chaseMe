@@ -5,7 +5,17 @@ import * as errors from "../../common/errors";
 
 import { UserModel as User, IUserModel } from './UserModel';
 
-export class UsersService {
+export class UserService {
+
+  async findById(id: string): Promise<IUserModel> {
+    let user = await User.findOne({ id: id });
+    return user;
+  }
+
+  async findByEmail(email: string): Promise<IUserModel> {
+    let user = await User.findOne({ email: email });
+    return user;
+  }
 
   async all(): Promise<IUserModel[]> {
     L.info('fetch all users');
@@ -34,13 +44,15 @@ export class UsersService {
   }
 
   async create(userData: IUserModel): Promise<IUserModel> {
-    L.info(`create user with data ${userData}`);
+    try {
+      const user = new User(userData);
 
-    const user = new User(userData);
-
-    const doc = await user.save() as IUserModel;
-
-    return doc;
+      const doc = await user.save() as IUserModel;
+      L.info(`create user with data ${JSON.stringify(userData)}`);
+      return doc;
+    } catch (err) {
+      L.error(`Error while trying to create user ${JSON.stringify(userData)}`);
+    }
   }
 
   async patch(id: string, userData: IUserModel): Promise<IUserModel> {
@@ -64,4 +76,4 @@ export class UsersService {
   }
 }
 
-export default new UsersService();
+export default new UserService();
