@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native'
-import Config from 'react-native-config';
-
+import Constants from "expo-constants";
 
 
 /**
@@ -16,15 +15,15 @@ const Request = async function (options, isHeader = true) {
   }
 
   const client = axios.create({
-    baseURL: Config.BASE_URL,
-    headers: { 'Authorization': authHeader }
+    baseURL: `http://${Constants.manifest.debuggerHost.split(':').shift()}:3000/api`,
+    headers: { 'Authorization': 'Bearer ' + authHeader }
 
   });
 
   const onSuccess = function (response) {
 
     console.debug('Request Successful!', response);
-    return JSON.parse(response.data);
+    return response.data;
   }
 
   const onError = function (error) {

@@ -24,6 +24,10 @@
     ],
     "ios": {
       "supportsTablet": true
+    },
+    "extra":{
+      "BASE_URL": "http://192.168.0.101:3000/api/",
+      "FACEBOOK_ID": ""
     }
   }
 }

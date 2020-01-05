@@ -9,21 +9,30 @@ import BackButton from '../../components/login/BackButton';
 import { theme } from '../../core/theme';
 import { emailValidator, passwordValidator } from '../../core/utils';
 
-const LoginScreen = ({ navigation }) => {
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { loginUser } from '../../redux/actions/UserActions';
+
+const LoginScreen = (props) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
-
-  const _onLoginPressed = () => {
+  const navigation = props.navigation;
+  const _onLoginPressed = async () => {
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
-
     if (emailError || passwordError) {
       setEmail({ ...email, error: emailError });
       setPassword({ ...password, error: passwordError });
       return;
     }
-
-    navigation.navigate('Main');
+    try {
+      await props.loginUser(email.value, password.value);
+      navigation.navigate('Main');
+    } catch (error) {
+      // console.warn(error);
+    }
+    
+    
   };
 
   return (
@@ -58,6 +67,7 @@ const LoginScreen = ({ navigation }) => {
       />
 
       <View style={styles.forgotPassword}>
+        <Text>{props.message}</Text>
         <TouchableOpacity
           onPress={() => navigation.navigate('ForgotPasswordScreen')}
         >
@@ -98,4 +108,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo(LoginScreen);
+LoginScreen.PropTypes = {
+  message: PropTypes.string
+};
+
+const mapStateToProps = (state)=>({
+  message: state.loginData.message
+});
+
+export default connect(mapStateToProps,{loginUser})(memo(LoginScreen));
