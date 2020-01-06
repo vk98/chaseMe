@@ -10,6 +10,8 @@ import MessagesScreen from '../screens/Messages';
 import ProfileScreen from '../screens/Profile';
 import Map from '../screens/Map';
 import UserSettings from '../screens/UserSettings';
+import FontAwesome, { SolidIcons, RegularIcons, BrandIcons } from 'react-native-fontawesome';
+import { Ionicons } from '@expo/vector-icons';
 const App = createBottomTabNavigator(
 	{
 		Explore: {
@@ -23,13 +25,13 @@ const App = createBottomTabNavigator(
 				}
 			}
 		},
-		Matches: {
+		Friends: {
 			screen: MatchesScreen,
 			navigationOptions: {
 				tabBarIcon: ({ focused, tintColor }) => {
 					const iconFocused = focused ? '#7444C0' : '#363636';
 					return (
-						<Text style={[styles.icon, { color: iconFocused }]}>&#xe800;</Text>
+						<Text style={[styles.icon, { color: iconFocused }]}><Ionicons name="ios-people" size={20} /></Text>
 					);
 				}
 			}
@@ -46,7 +48,7 @@ const App = createBottomTabNavigator(
 			}
 		},
 		Profile: {
-			screen: Swipe,
+			screen: ProfileScreen,
 			navigationOptions: {
 				tabBarIcon: ({ focused, tintColor }) => {
 					const iconFocused = focused ? '#7444C0' : '#363636';

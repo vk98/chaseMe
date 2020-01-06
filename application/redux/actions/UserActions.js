@@ -1,5 +1,5 @@
 import UserServiceAPI from '../../services/User.service';
-import { GET_USER_DATA, UPDATE_USER_DATA, USER_LOGIN, USER_LOGOUT } from '../actions/types';
+import { GET_USER_DATA, UPDATE_USER_DATA, USER_LOGIN, USER_LOGOUT, GET_USERS_FRIENDS, GET_USER_PROFILE } from '../actions/types';
 import { AsyncStorage } from 'react-native';
 
 export const getUserData = () => async dispatch => {
@@ -47,10 +47,37 @@ export const loginUser = (email, password) => async dispatch => {
     
 }
 
+export const getUsersFriends = () => async dispatch => {
+    try{
+        let friends = JSON.parse(await AsyncStorage.getItem('user')).friends;
+        let friendsObjects = [];
+        for(let f of friends){
+            friendsObjects.push(await UserServiceAPI.getUser(f));
+        }
+        dispatch({
+            type: GET_USERS_FRIENDS,
+            payload: friendsObjects
+        });
+    }catch(err){
+        console.warn(err);
+        throw new Error("Error while getting friends");
+    }
+}
+
 export const logoutUser = () => async dispatch => {
     await UserServiceAPI.logoutUser(id);
     await AsyncStorage.clear();
     return dispatch({
         type: USER_LOGOUT
     });
+}
+
+export const getUserProfile = (id) => async dispatch => {
+    let user = await UserServiceAPI.getUser(id);
+    return dispatch({
+        type: GET_USER_PROFILE,
+        payload: user
+    });
+
+
 }

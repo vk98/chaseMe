@@ -10,15 +10,22 @@ import {
 } from 'react-native';
 import ProfileItem from '../components/ProfileItem';
 import Demo from '../assets/data/demo.js';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getUserProfile } from '../redux/actions/UserActions';
 
 class Profile extends React.Component {
 	static navigationOptions = {
 		header: null
 	};
+	constructor(props){
+		super(props);
+		this.props.getUserProfile(this.props.navigation.getParam('userId', null));
+	}
 	render() {
 		return (
 			<ImageBackground
-				source={require('../assets/images/bg.png')}
+				source={{uri:this.props.user.images[0]}}
 				style={styles.bg}
 			>
 				<ScrollView style={styles.container}>
@@ -36,7 +43,7 @@ class Profile extends React.Component {
 
 					<ProfileItem
 						matches={Demo[7].match}
-						name={Demo[7].name}
+						name={this.props.user.name}
 						age={Demo[7].age}
 						location={Demo[7].location}
 						info1={Demo[7].info1}
@@ -127,4 +134,12 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default Profile;
+Profile.PropTypes = {
+	getUserProfile: PropTypes.func.isRequired,
+	user: PropTypes.string.isRequired
+}
+const mapStateToProps = state => ({ 
+	user: state.profileData.user 
+});
+
+export default connect(mapStateToProps, { getUserProfile })(Profile);
