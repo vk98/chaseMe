@@ -16,7 +16,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getUsersFriends } from '../redux/actions/UserActions';
 
-class Matches extends React.Component {
+class Friends extends React.Component {
 	static navigationOptions = {
 		header: null
 	};
@@ -61,8 +61,7 @@ class Matches extends React.Component {
 	}
 
 	_onItemPressed(id){
-		console.warn('here')
-		this.props.navigation.navigate('Profile',{
+		this.props.navigation.navigate('UserProfile',{
 			userId: id
 		});
 	}
@@ -97,7 +96,7 @@ const styles = StyleSheet.create({
 	}
 });
 
-Matches.PropTypes = {
+Friends.propTypes = {
 	friends: PropTypes.array.isRequired,
 	getUsersFriends: PropTypes.func.isRequired
 }
@@ -106,4 +105,4 @@ const mapStateToProps = state => ({
 	friends: state.friendsData.friends 
 });
 
-export default connect(mapStateToProps, { getUsersFriends })(Matches);
+export default connect(mapStateToProps, { getUsersFriends })(Friends);

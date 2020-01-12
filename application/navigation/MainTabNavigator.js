@@ -5,12 +5,9 @@ import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import TabBarIcon from '../components/TabBarIcon';
 import Swipe from '../screens/Swipe';
-import MatchesScreen from '../screens/Matches';
 import MessagesScreen from '../screens/Messages';
-import ProfileScreen from '../screens/Profile';
 import Map from '../screens/Map';
 import UserSettings from '../screens/UserSettings';
-import FontAwesome, { SolidIcons, RegularIcons, BrandIcons } from 'react-native-fontawesome';
 import { Ionicons } from '@expo/vector-icons';
 const App = createBottomTabNavigator(
 	{
@@ -25,13 +22,13 @@ const App = createBottomTabNavigator(
 				}
 			}
 		},
-		Friends: {
-			screen: MatchesScreen,
+		Swipe: {
+			screen: Swipe,
 			navigationOptions: {
 				tabBarIcon: ({ focused, tintColor }) => {
 					const iconFocused = focused ? '#7444C0' : '#363636';
 					return (
-						<Text style={[styles.icon, { color: iconFocused }]}><Ionicons name="ios-people" size={20} /></Text>
+						<Text style={[styles.icon, { color: iconFocused }]}><Ionicons name="ios-swap" size={20} /></Text>
 					);
 				}
 			}
@@ -47,8 +44,8 @@ const App = createBottomTabNavigator(
 				}
 			}
 		},
-		Profile: {
-			screen: ProfileScreen,
+		Settings: {
+			screen: UserSettings,
 			navigationOptions: {
 				tabBarIcon: ({ focused, tintColor }) => {
 					const iconFocused = focused ? '#7444C0' : '#363636';

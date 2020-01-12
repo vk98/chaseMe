@@ -5,70 +5,63 @@ import {
     View,
     ImageBackground,
     Dimensions,
-    Text, Icon
+    Text, Icon, TouchableOpacity, FlatList, Image
 } from 'react-native';
 import { Button, Content } from 'native-base';
-
+import SettingsButton from '../components/SettingsButton';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getUserData, setUserData } from '../redux/actions/UserActions';
+import Demo from '../assets/data/demo.js';
+import {theme} from '../core/theme';
+
 class UserSettings extends React.Component {
     constructor(props) {
         super(props);
-        this.props.getUserData();
+        //this.props.getUserData();
     }
     static navigationOptions = {
         header: null
     };
     render() {
         return (
-            <Content styles={styles.container}>
-                <Button full >
-                    <Text style={styles.icon}>&#xf142;</Text>
-                    <Text>Back</Text>
-                </Button>
-                <Button  >
-                    <Text style={styles.icon}>&#xf142;</Text>
-                    <Text>Back</Text>
-                </Button>
-                <Button light>
-                    <Text style={styles.icon}>&#xf142;</Text>
-                    <Text>Back</Text>
-                </Button>
-                <Button  >
-                    <Text style={styles.icon}>&#xf142;</Text>
-                    <Text>Back</Text>
-                </Button>
-                <Button  >
-                    <Text>Back</Text>
-                    <Text style={styles.icon}>&#xf142;</Text>
-
-                </Button>
-                <Button  >
-                    <Text style={styles.icon}>&#xf142;</Text>
-                    <Text>Back</Text>
-                </Button>
-                <Button  >
-                    <Text style={styles.icon}>&#xf142;</Text>
-                    <Text>Back</Text>
-                </Button>
-            
-            </Content>
+            <ImageBackground
+                source={require('../assets/images/bg.png')}
+                style={styles.bg}
+            >
+                <View style={styles.container}>
+                    <ScrollView>
+                        <View style={styles.top}>
+                            <Text style={styles.title}>User Settings</Text>
+                            <TouchableOpacity>
+                                <Text style={styles.icon}>&#xf142;</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.userShowup}>
+                            <Image source={Demo[7].image} style={styles.avatar} />
+                            <Text style={styles.userShowupName}>{Demo[7].name}</Text>
+                        </View>
+                        <SettingsButton icon={{name: "ios-person"}} name="Personal details"></SettingsButton>
+                        <SettingsButton icon={{name: "logo-model-s"}} name="Cars"></SettingsButton>
+                        <SettingsButton icon={{name: "ios-people"}} name="Friends"></SettingsButton>
+                    </ScrollView>
+                </View>
+            </ImageBackground>
         );
     }
 }
 
 const styles = StyleSheet.create({
-    container: { paddingTop: 30, marginHorizontal: 0 },
+    container: {
+        justifyContent: 'space-between',
+        flex: 1,
+        paddingHorizontal: 10
+    },
     bg: {
         flex: 1,
         resizeMode: 'cover',
         width: Dimensions.get('window').width,
         height: Dimensions.get('window').height
-    },
-    photo: {
-        width: Dimensions.get('window').width,
-        height: 450
     },
     top: {
         paddingTop: 50,
@@ -77,71 +70,46 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center'
     },
-    topIconLeft: {
-        fontFamily: 'tinderclone',
-        fontSize: 20,
-        color: '#FFF',
-        paddingLeft: 20,
-        marginTop: -20,
-        transform: [{ rotate: '90deg' }]
-    },
-    topIconRight: {
-        fontFamily: 'tinderclone',
-        fontSize: 20,
-        color: '#FFF',
-        paddingRight: 20
-    },
-    actions: {
-        justifyContent: 'center',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    iconButton: { fontFamily: 'tinderclone', fontSize: 20, color: '#FFF' },
-    textButton: {
-        fontFamily: 'tinderclone',
-        fontSize: 15,
-        color: '#FFF',
-        paddingLeft: 5
-    },
-    circledButton: {
-        width: 50,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: '#7444C0',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 10
-    },
-    roundedButton: {
-        justifyContent: 'center',
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginLeft: 10,
-        height: 50,
-        borderRadius: 25,
-        backgroundColor: '#5636B8',
-        paddingHorizontal: 20
-    },
+    title: { paddingBottom: 10, fontSize: 22, color: '#363636' },
     icon: {
         fontFamily: 'tinderclone',
         fontSize: 20,
         color: '#363636',
         paddingRight: 10
+    },
+    avatar: {
+		borderRadius: 30,
+		width: 60,
+		height: 60,
+		marginRight: 20,
+		marginVertical: 15
+    },
+    userShowup:{
+        display: 'flex',
+        justifyContent: "flex-start",
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: "gray"
+    },
+    userShowupName:{
+        fontSize: 25,
+        paddingTop:"5%",
+        color: theme.textColors.primary
     }
 });
-Map.propTypes = {
-    setUserData: PropTypes.func.isRequired,
-    getUserData: PropTypes.func.isRequired,
-    userImages: PropTypes.array.isRequired,
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
-    email: PropTypes.string,
-    friends: PropTypes.array,
-    cars: PropTypes.array,
-    address: PropTypes.string,
-    description: PropTypes.string
+// UserSettings.propTypes = {
+//     setUserData: PropTypes.func.isRequired,
+//     getUserData: PropTypes.func.isRequired,
+//     userImages: PropTypes.array.isRequired,
+//     firstName: PropTypes.string,
+//     lastName: PropTypes.string,
+//     email: PropTypes.string,
+//     friends: PropTypes.array,
+//     cars: PropTypes.array,
+//     address: PropTypes.string,
+//     description: PropTypes.string
 
-};
+// };
 
 const mapStateToProps = state => ({
     userImages: state.userData.userImages,

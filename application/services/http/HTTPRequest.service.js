@@ -22,7 +22,7 @@ const Request = async function (options, isHeader = true) {
 
   const onSuccess = function (response) {
 
-    console.debug('Request Successful!', response);
+    console.debug('Request Successful!', `${response.config.method} ${response.config.baseURL} DONE!`);
     return response.data;
   }
 

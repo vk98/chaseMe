@@ -1,6 +1,6 @@
 import { GET_USER_DATA, UPDATE_USER_DATA, USER_LOGOUT, USER_LOGIN } from '../actions/types';
 const initialState = {
-    userImages: [],
+    images: [],
     firstName: '',
     lastName: '',
     email: '',
