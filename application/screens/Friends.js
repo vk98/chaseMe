@@ -12,11 +12,18 @@ import {
 import CardItem from '../components/CardItem';
 import Demo from '../assets/data/demo.js';
 
-class Matches extends React.Component {
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getUsersFriends } from '../redux/actions/UserActions';
+
+class Friends extends React.Component {
 	static navigationOptions = {
 		header: null
 	};
-
+	constructor(props){
+		super(props);
+		this.props.getUsersFriends();
+	}
 	render() {
 		return (
 			<ImageBackground
@@ -26,7 +33,7 @@ class Matches extends React.Component {
 				<View style={styles.container}>
 					<ScrollView>
 						<View style={styles.top}>
-							<Text style={styles.title}>Matches</Text>
+							<Text style={styles.title}>Friends</Text>
 							<TouchableOpacity>
 								<Text style={styles.icon}>&#xf142;</Text>
 							</TouchableOpacity>
@@ -34,13 +41,13 @@ class Matches extends React.Component {
 
 						<FlatList
 							numColumns={2}
-							data={Demo}
+							data={this.props.friends}
 							renderItem={({ item }) => (
-								<TouchableOpacity>
+								<TouchableOpacity onPress={()=> this._onItemPressed(item._id)}>
 									<CardItem
-										image={item.image}
+										image={{uri:item.images[0]}}
 										name={item.name}
-										status={item.status}
+										status={"Online"}
 										variant
 									/>
 								</TouchableOpacity>
@@ -52,6 +59,13 @@ class Matches extends React.Component {
 			</ImageBackground>
 		);
 	}
+
+	_onItemPressed(id){
+		this.props.navigation.navigate('UserProfile',{
+			userId: id
+		});
+	}
+
 }
 
 const styles = StyleSheet.create({
@@ -82,4 +96,13 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default Matches;
+Friends.propTypes = {
+	friends: PropTypes.array.isRequired,
+	getUsersFriends: PropTypes.func.isRequired
+}
+
+const mapStateToProps = state => ({ 
+	friends: state.friendsData.friends 
+});
+
+export default connect(mapStateToProps, { getUsersFriends })(Friends);

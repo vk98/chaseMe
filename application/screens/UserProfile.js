@@ -44,7 +44,7 @@ class UserProfile extends React.Component {
 
 					<ProfileItem
 						matches={Demo[7].match}
-						name={this.props.firstName + ' ' + this.props.lastName}
+						name={this.props.name}
 						age={Demo[7].age}
 						location={this.props.address}
 						info1={this.props.description}
@@ -138,8 +138,7 @@ Map.propTypes = {
     setUserData: PropTypes.func.isRequired,
 	getUserData: PropTypes.func.isRequired,
 	userImages: PropTypes.array.isRequired,
-    firstName: PropTypes.string,
-    lastName: PropTypes.string,
+    name: PropTypes.string,
     email: PropTypes.string,
     friends: PropTypes.array,
     cars: PropTypes.array,
@@ -150,8 +149,7 @@ Map.propTypes = {
 
 const mapStateToProps = state => ({
 	userImages: state.userData.userImages,
-    firstName: state.userData.firstName,
-	lastName: state.userData.lastName,
+    name: state.userData.name,
 	email: state.userData.email,
 	friends: state.userData.friends,
     cars: state.userData.cars,

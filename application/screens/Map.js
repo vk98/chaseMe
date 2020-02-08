@@ -13,6 +13,7 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getMapMarkers } from '../redux/actions/MapActions';
+import { getCurrentUserData } from '../redux/actions/UserActions';
 
 class Map extends React.Component {
 
@@ -29,6 +30,7 @@ class Map extends React.Component {
 		this.state = {
 			region: initRegion
 		}
+		this.props.getCurrentUserData().then(data=>console.warn('data is loaded')).catch(err=>console.warn(`There is error: ${err}`)); //TODO - remove
 		//this.onRegionChange = this.onRegionChange.bind(this);
 	}
 
@@ -117,4 +119,4 @@ const mapStateToProps = state => ({
 	myPosition: state.mapData.myPosition
 });
 
-export default connect(mapStateToProps, { getMapMarkers })(Map);
+export default connect(mapStateToProps, { getMapMarkers, getCurrentUserData })(Map);

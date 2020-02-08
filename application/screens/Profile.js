@@ -10,53 +10,67 @@ import {
 } from 'react-native';
 import ProfileItem from '../components/ProfileItem';
 import Demo from '../assets/data/demo.js';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getUserProfile } from '../redux/actions/UserActions';
 
 class Profile extends React.Component {
 	static navigationOptions = {
 		header: null
 	};
+	constructor(props) {
+		super(props);
+		console.log(this.props.user);
+		this.props.getUserProfile(this.props.navigation.getParam('userId', null)).then(() => { this.render(); });
+	}
+	_isUserLoaded() {
+		return !!this.props.user;
+	}
+
+	_openDropDownMenu(){
+		
+	}
 	render() {
 		return (
-			<ImageBackground
-				source={require('../assets/images/bg.png')}
-				style={styles.bg}
-			>
-				<ScrollView style={styles.container}>
-					<ImageBackground source={Demo[7].image} style={styles.photo}>
-						<View style={styles.top}>
-							<TouchableOpacity>
-								<Text style={styles.topIconLeft}>&#xf004;</Text>
-							</TouchableOpacity>
+					<ImageBackground
+						source={{uri: this.props.user.images[0] }}
+						style={styles.bg}>
+						<ScrollView style={styles.container}>
+							<ImageBackground source={{uri: this.props.user.images[0] }} style={styles.photo}>
+								<View style={styles.top}>
+									<TouchableOpacity>
+										<Text style={styles.topIconLeft}>&#xf004;</Text>
+									</TouchableOpacity>
 
-							<TouchableOpacity>
-								<Text style={styles.topIconRight}>&#xf142;</Text>
-							</TouchableOpacity>
-						</View>
+									<TouchableOpacity onPress={_openDropDownMenu()}>
+										<Text style={styles.topIconRight}>&#xf142;</Text>
+									</TouchableOpacity>
+								</View>
+							</ImageBackground>
+
+							<ProfileItem
+								matches={Demo[7].match}
+								name={this.props.user.name}
+								age={Demo[7].age}
+								location={Demo[7].location}
+								info1={Demo[7].info1}
+								info2={Demo[7].info2}
+								info3={Demo[7].info3}
+								info4={Demo[7].info4}
+							/>
+
+							<View style={styles.actions}>
+								<TouchableOpacity style={styles.circledButton}>
+									<Text style={styles.iconButton}>&#xf141;</Text>
+								</TouchableOpacity>
+
+								<TouchableOpacity style={styles.roundedButton}>
+									<Text style={styles.iconButton}>&#xf4ac;</Text>
+									<Text style={styles.textButton}>Start chatting</Text>
+								</TouchableOpacity>
+							</View>
+						</ScrollView>
 					</ImageBackground>
-
-					<ProfileItem
-						matches={Demo[7].match}
-						name={Demo[7].name}
-						age={Demo[7].age}
-						location={Demo[7].location}
-						info1={Demo[7].info1}
-						info2={Demo[7].info2}
-						info3={Demo[7].info3}
-						info4={Demo[7].info4}
-					/>
-
-					<View style={styles.actions}>
-						<TouchableOpacity style={styles.circledButton}>
-							<Text style={styles.iconButton}>&#xf141;</Text>
-						</TouchableOpacity>
-
-						<TouchableOpacity style={styles.roundedButton}>
-							<Text style={styles.iconButton}>&#xf4ac;</Text>
-							<Text style={styles.textButton}>Start chatting</Text>
-						</TouchableOpacity>
-					</View>
-				</ScrollView>
-			</ImageBackground>
 		);
 	}
 }
@@ -127,4 +141,12 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default Profile;
+Profile.propTypes = {
+	getUserProfile: PropTypes.func.isRequired,
+	user: PropTypes.object
+}
+const mapStateToProps = state => ({
+	user: state.profileData.user
+});
+
+export default connect(mapStateToProps, { getUserProfile })(Profile);

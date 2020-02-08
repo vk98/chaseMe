@@ -1,6 +1,6 @@
 import Request from './http/HTTPRequest.service'
 export class UserServiceAPI {
-    
+
     getUsersList() {
         return Request({
             url: `/users`,
@@ -8,7 +8,7 @@ export class UserServiceAPI {
         });
     }
     /**@param { string } id  */
-    getUser(id){
+    getUser(id) {
         return Request({
             url: `/users/${id}`,
             method: 'GET'
@@ -16,14 +16,14 @@ export class UserServiceAPI {
     }
 
     /**@param { { email: string } } data *///TODO
-    createUser(data){
+    createUser(data) {
         return Request({
             url: `/users/`,
             method: 'POST'
         });
     }
 
-    
+
     updateUser(user) {
         return Request({
             url: `/users/${id}`,
@@ -40,6 +40,25 @@ export class UserServiceAPI {
         });
     }
 
+    /** 
+     * @param { string } email
+     * @param { string } password
+     */
+    loginUser(email, password) {
+        return Request({
+            url: `/users/login`,
+            method: "POST",
+            data: { email: email, password: password }
+        });
+    }
+
+    logoutUser(){
+        return Request({
+            url: `/user/logout`,
+            method: "POST",
+            data: { userId: '324234' }//TODO
+        });
+    }
 }
 
 module.exports = new UserServiceAPI();

@@ -8,4 +8,10 @@ export const theme = {
     secondary: '#414757',
     error: '#f13a59',
   },
+  textColors: {
+    primary: '#4b4d50'
+  },
+  iconColors: {
+    primary: '#147de8'
+  }
 };

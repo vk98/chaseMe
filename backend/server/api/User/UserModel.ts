@@ -11,6 +11,7 @@ export interface IUserModel extends mongoose.Document {
   socialNetworkId: string;
   awaitingFriendResponse: [];
   hasNewFriendRequest: boolean;
+  images: string[];
   friendRequests: [];
   friends: string[];
   address: string;
@@ -30,6 +31,7 @@ const schema = new Schema({
   awaitingFriendResponse: Array,
   hasNewFriendRequest: Boolean,
   friendRequests: Array,
+  images: Array,
   email: String,
   socialNetworkId: String,
   friends: [
