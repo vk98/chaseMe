@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 export interface IChatModel extends mongoose.Document {
     _id: string;
     senderId: string
-    receiverId: string;
+    roomId: string;
     text: string;
     createdAt: Date;
     updatedAt: Date;
@@ -13,7 +13,7 @@ export interface IChatModel extends mongoose.Document {
 
 const schema = new Schema({
     senderId: String,
-    receiverId: String,
+    roomId: String,
     text: String,
     createdAt: Date,
     updatedAt: Date

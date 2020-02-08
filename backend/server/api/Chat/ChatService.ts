@@ -7,11 +7,11 @@ import { ChatModel as Chat, IChatModel } from './ChatModel';
 
 export class ChatsService {
 
-    async messagesForId(id: string): Promise<IChatModel[]> {
-        L.info(`Geting messages for id: ${id}`);
+    async messagesForRoomId(roomId: string): Promise<IChatModel[]> {
+        L.info(`Geting messages for room: ${roomId}`);
 
         const docs = await Chat
-            .find({ $or: [{ senderId: id}, {receiverId: id }] })
+            .find({ room: roomId })
             .lean()
             .exec() as IChatModel[];
 

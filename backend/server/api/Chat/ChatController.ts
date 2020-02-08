@@ -1,12 +1,12 @@
-import ChatsService from './ChatService';
+import ChatService from './ChatService';
 import { Request, Response, NextFunction } from 'express';
 import * as HttpStatus from 'http-status-codes';
 
 export class Controller {
 
-  async messagesForId(req: Request, res: Response, next: NextFunction) {
+  async messagesForRoomId(req: Request, res: Response, next: NextFunction) {
     try {
-      const docs = await ChatsService.messagesForId(req.params.id);
+      const docs = await ChatService.messagesForRoomId(req.params.sender);
       return res.status(HttpStatus.OK).json(docs);
     }
     catch (err) {
@@ -16,7 +16,7 @@ export class Controller {
 
   async byId(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await ChatsService.byId(req.params.id);
+      const doc = await ChatService.byId(req.params.id);
       return res.status(HttpStatus.OK).json(doc);
     }
     catch (err) {
@@ -26,7 +26,7 @@ export class Controller {
 
   async sendMessage(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await ChatsService.create(req.body);
+      const doc = await ChatService.create(req.body);
       return res.status(HttpStatus.CREATED).json(doc);
     }
     catch (err) {
@@ -36,7 +36,7 @@ export class Controller {
 
   async patch(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await ChatsService.patch(req.params.id, req.body);
+      const doc = await ChatService.patch(req.params.id, req.body);
       return res.status(HttpStatus.OK).json(doc);
     }
     catch (err) {
@@ -46,7 +46,7 @@ export class Controller {
 
   async remove(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await ChatsService.remove(req.params.id);
+      const doc = await ChatService.remove(req.params.id);
       return res.status(HttpStatus.NO_CONTENT).send();
     }
     catch (err) {

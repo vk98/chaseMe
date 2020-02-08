@@ -4,11 +4,12 @@ import CarRoutes from './api/Car/CarRoutes';
 import LocationRoutes from './api/Location/LocationRoutes';
 import UserRoutes from './api/User/UserRoutes';
 import ChatRoutes from './api/Chat/ChatRoutes';
+import ChatRoomRoutes from './api/ChatRoom/ChatRoomRoutes';
 
 export default function routes(app: Application): void {
   app.use('/api/examples', examplesRouter);
   app.use('/api/cars', CarRoutes);
   app.use('/api/locations', LocationRoutes);
   app.use('/api/users', UserRoutes);
-  app.use('/api/messages', ChatRoutes)
+  app.use('/api/messages', ChatRoutes, ChatRoomRoutes)
 };
