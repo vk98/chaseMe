@@ -8,7 +8,7 @@ import { UserModel as User, IUserModel } from './UserModel';
 export class UserService {
 
   async findById(id: string): Promise<IUserModel> {
-    let user = await User.findOne({ id: id });
+    let user = await User.findOne({ id: id }).populate('cars');
     return user;
   }
 
@@ -34,7 +34,7 @@ export class UserService {
     if (!mongooseTypes.ObjectId.isValid(id)) throw new errors.HttpError(HttpStatus.BAD_REQUEST);
 
     const doc = await User
-      .findOne({ _id: id }).populate('friends')
+      .findOne({ _id: id }).populate('cars')
       .lean()
       .exec() as IUserModel;
 
