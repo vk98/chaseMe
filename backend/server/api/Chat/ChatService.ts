@@ -36,9 +36,7 @@ export class ChatsService {
     async create(chatData: IChatModel): Promise<IChatModel> {
         L.info(`Created new chat message with data: ${chatData}`);
 
-        const chat = new Chat(chatData);
-
-        const doc = await chat.save() as IChatModel;
+        let doc = await Chat.create(chatData);
 
         return doc;
     }
