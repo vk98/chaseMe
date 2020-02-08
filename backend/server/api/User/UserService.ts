@@ -13,7 +13,7 @@ export class UserService {
   }
 
   async findByEmail(email: string): Promise<IUserModel> {
-    let user = await User.findOne({ email: email });
+    const user = await User.findOne({ email: email }).populate('cars');
     return user;
   }
 
@@ -34,7 +34,7 @@ export class UserService {
     if (!mongooseTypes.ObjectId.isValid(id)) throw new errors.HttpError(HttpStatus.BAD_REQUEST);
 
     const doc = await User
-      .findOne({ _id: id })
+      .findOne({ _id: id }).populate('friends')
       .lean()
       .exec() as IUserModel;
 

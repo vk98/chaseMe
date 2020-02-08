@@ -21,14 +21,22 @@ export interface IUserModel extends mongoose.Document {
 
 const schema = new Schema({
   name: String,
-  cars: Array,
+  cars: [
+    {
+      type: Schema.Types.ObjectId, ref: 'cars'
+    }
+  ],
   password: String,
   awaitingFriendResponse: Array,
   hasNewFriendRequest: Boolean,
   friendRequests: Array,
   email: String,
   socialNetworkId: String,
-  friends: Array,
+  friends: [
+    {
+      type: Schema.Types.ObjectId, ref: 'users'
+    }
+  ],
   address: String,
   description: String
 },
