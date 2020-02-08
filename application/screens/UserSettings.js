@@ -18,7 +18,7 @@ import {theme} from '../core/theme';
 class UserSettings extends React.Component {
     constructor(props) {
         super(props);
-        //this.props.getUserData();
+        this.props.getUserData();
     }
     static navigationOptions = {
         header: null
@@ -41,9 +41,9 @@ class UserSettings extends React.Component {
                             <Image source={Demo[7].image} style={styles.avatar} />
                             <Text style={styles.userShowupName}>{Demo[7].name}</Text>
                         </View>
-                        <SettingsButton icon={{name: "ios-person"}} name="Personal details"></SettingsButton>
-                        <SettingsButton icon={{name: "logo-model-s"}} name="Cars"></SettingsButton>
-                        <SettingsButton icon={{name: "ios-people"}} name="Friends"></SettingsButton>
+                        <SettingsButton icon={{name: "ios-person"}} name="Personal details" onPress={() => this.props.navigation.navigate('UserProfile')}></SettingsButton>
+                        <SettingsButton icon={{name: "logo-model-s"}} name="Cars" onPress={() => this.props.navigation.navigate('Swipe')}></SettingsButton>
+                        <SettingsButton icon={{name: "ios-people"}} name="Friends" onPress={() => this.props.navigation.navigate('Friends')}></SettingsButton>
                     </ScrollView>
                 </View>
             </ImageBackground>
@@ -113,8 +113,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
     userImages: state.userData.userImages,
-    firstName: state.userData.firstName,
-    lastName: state.userData.lastName,
+    name: state.userData.name,
     email: state.userData.email,
     friends: state.userData.friends,
     cars: state.userData.cars,

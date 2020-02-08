@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import {theme} from '../core/theme';
 class SettingsButton extends React.Component {
@@ -8,10 +8,10 @@ class SettingsButton extends React.Component {
     }
 	render() {
 		return (
-			<View style={styles.container}>
+			<TouchableOpacity style={styles.container}>
 				<Ionicons color={theme.iconColors.primary} name={this.props.icon.name} size={40} />
                 <Text style={styles.message}>{this.props.name}</Text>
-			</View>
+			</TouchableOpacity>
 		);
 	}
 }

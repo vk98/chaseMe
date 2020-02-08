@@ -10,6 +10,5 @@ export default createAppContainer(createSwitchNavigator({
   // Read more at https://reactnavigation.org/docs/en/auth-flow.html
   Main: MainTabNavigator,
   Login: LoginNavigaor,
-  
   Inside: InsideNavigator
 }));

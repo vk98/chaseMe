@@ -11,9 +11,10 @@ export const getUserData = () => async dispatch => {
 };
 
 export const getCurrentUserData = () => async dispatch => {
-    let id = JSON.parse(await AsyncStorage.getItem('user'))._id;
+    //let id = JSON.parse(await AsyncStorage.getItem('user'))._id;
+    let id = "5e10ccbbc833de5e28f44a77";
     let userData = await UserServiceAPI.getUser(id);
-    await AsyncStorage.setItem('user', userData);
+    await AsyncStorage.setItem('user', JSON.stringify(userData));
     return dispatch({
         type: GET_USER_DATA,
         payload: userData

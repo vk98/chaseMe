@@ -1,8 +1,7 @@
 import { GET_USER_DATA, UPDATE_USER_DATA, USER_LOGOUT, USER_LOGIN } from '../actions/types';
 const initialState = {
     images: [],
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
     friends: [],
     cars: [],
@@ -16,8 +15,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 userImages: action.payload.userImages,
-                firstName: action.payload.firstName,
-                lastName: action.payload.lastName,
+                name: action.payload.name,
                 email: action.payload.email,
                 friends: action.payload.friends,
                 cars: action.payload.cars,
@@ -28,8 +26,7 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 userImages: action.payload.userImages,
-                firstName: action.payload.firstName,
-                lastName: action.payload.lastName,
+                name: action.payload.name,
                 email: action.payload.email,
                 friends: action.payload.friends,
                 cars: action.payload.cars,
@@ -45,8 +42,7 @@ export default function (state = initialState, action) {
             return{
                 ...state,
                 userImages: action.payload.userImages,
-                firstName: action.payload.firstName,
-                lastName: action.payload.lastName,
+                name: action.payload.name,
                 email: action.payload.email,
                 friends: action.payload.friends,
                 cars: action.payload.cars,

@@ -3,8 +3,7 @@ import { GET_USER_PROFILE } from '../actions/types';
 const initialState = {
     user:{
        images: [],
-       firstName: '',
-       lastName: '',
+       name: '',
        email: '',
        friends: [],
        cars: [],
