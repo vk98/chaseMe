@@ -4,10 +4,12 @@ import UserReducer from '../reducers/UserReducer';
 import LoginReducer from '../reducers/LoginReducer';
 import FriendsReducer from '../reducers/FriendsReducer';
 import ProfileReducer from '../reducers/ProfileReducer';
+import ChatReducer from './ChatReducer';
 export default combineReducers({
   mapData: MapReducer,
   userData: UserReducer,
   loginData: LoginReducer,
   friendsData: FriendsReducer,
-  profileData: ProfileReducer
+  profileData: ProfileReducer,
+  chatData: ChatReducer,
 });

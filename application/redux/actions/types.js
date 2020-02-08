@@ -19,3 +19,9 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 //Friends actions
 export const GET_USERS_FRIENDS = 'GET_USERS_FRIENDS';
 export const GET_USER_PROFILE = 'GET_USER_PROFILE';
+
+//Chat actions 
+export const GET_CHAT_HISTORY = 'GET_CHAT_HISTORY';
+export const POST_SEND_MESSAGE = 'POST_SEND_MESSAGE';
+export const GET_CHAT_ROOMS = 'GET_CHAT_ROOMS';
+export const CREATE_CHAT_ROOM = 'CREATE_CHAT_ROOM';

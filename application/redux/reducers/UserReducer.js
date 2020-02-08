@@ -1,5 +1,6 @@
 import { GET_USER_DATA, UPDATE_USER_DATA, USER_LOGOUT, USER_LOGIN } from '../actions/types';
 const initialState = {
+    _id: '',
     images: [],
     name: '',
     email: '',
@@ -14,7 +15,8 @@ export default function (state = initialState, action) {
         case GET_USER_DATA:
             return {
                 ...state,
-                userImages: action.payload.userImages,
+                _id: action.payload._id,
+                images: action.payload.images,
                 name: action.payload.name,
                 email: action.payload.email,
                 friends: action.payload.friends,
@@ -25,7 +27,8 @@ export default function (state = initialState, action) {
         case UPDATE_USER_DATA:
             return {
                 ...state,
-                userImages: action.payload.userImages,
+                _id: action.payload._id,
+                images: action.payload.images,
                 name: action.payload.name,
                 email: action.payload.email,
                 friends: action.payload.friends,
@@ -41,7 +44,8 @@ export default function (state = initialState, action) {
         case USER_LOGIN:
             return{
                 ...state,
-                userImages: action.payload.userImages,
+                _id: action.payload._id,
+                images: action.payload.images,
                 name: action.payload.name,
                 email: action.payload.email,
                 friends: action.payload.friends,

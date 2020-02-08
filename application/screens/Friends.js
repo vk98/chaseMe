@@ -61,7 +61,7 @@ class Friends extends React.Component {
 	}
 
 	_onItemPressed(id){
-		this.props.navigation.navigate('UserProfile',{
+		this.props.navigation.navigate('Profile',{
 			userId: id
 		});
 	}

@@ -8,7 +8,7 @@ class SettingsButton extends React.Component {
     }
 	render() {
 		return (
-			<TouchableOpacity style={styles.container}>
+			<TouchableOpacity style={styles.container}  onPress={() => this.props.navigation.navigate(this.props.goTo)}>
 				<Ionicons color={theme.iconColors.primary} name={this.props.icon.name} size={40} />
                 <Text style={styles.message}>{this.props.name}</Text>
 			</TouchableOpacity>

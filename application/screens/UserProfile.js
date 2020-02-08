@@ -26,13 +26,13 @@ class UserProfile extends React.Component {
 	render() {
 		return (
 			<ImageBackground
-				source={{uri: this.props.userImages[0]}}
+				source={{uri: this.props.images[0]}}
 				style={styles.bg}
 			>
 				<ScrollView style={styles.container}>
 					<ImageBackground source={Demo[7].image} style={styles.photo}>
 						<View style={styles.top}>
-							<TouchableOpacity>
+							<TouchableOpacity onPress={()=> this.props.navigation.navigate('Explore')}>
 								<Text style={styles.topIconLeft}>&#xf004;</Text>
 							</TouchableOpacity>
 
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
 Map.propTypes = {
     setUserData: PropTypes.func.isRequired,
 	getUserData: PropTypes.func.isRequired,
-	userImages: PropTypes.array.isRequired,
+	images: PropTypes.array.isRequired,
     name: PropTypes.string,
     email: PropTypes.string,
     friends: PropTypes.array,
@@ -148,7 +148,7 @@ Map.propTypes = {
 };
 
 const mapStateToProps = state => ({
-	userImages: state.userData.userImages,
+	images: state.userData.images,
     name: state.userData.name,
 	email: state.userData.email,
 	friends: state.userData.friends,

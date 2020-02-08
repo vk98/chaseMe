@@ -19,7 +19,8 @@ export class UserServiceAPI {
     createUser(data) {
         return Request({
             url: `/users/`,
-            method: 'POST'
+            method: 'POST',
+            data: data
         });
     }
 

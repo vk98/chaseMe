@@ -23,12 +23,10 @@ class Profile extends React.Component {
 		console.log(this.props.user);
 		this.props.getUserProfile(this.props.navigation.getParam('userId', null)).then(() => { this.render(); });
 	}
-	_isUserLoaded() {
-		return !!this.props.user;
-	}
 
-	_openDropDownMenu(){
-		
+
+	openDropDownMenu(){
+		console.warn("nothing")
 	}
 	render() {
 		return (
@@ -38,11 +36,11 @@ class Profile extends React.Component {
 						<ScrollView style={styles.container}>
 							<ImageBackground source={{uri: this.props.user.images[0] }} style={styles.photo}>
 								<View style={styles.top}>
-									<TouchableOpacity>
+									<TouchableOpacity onPress={()=> this.props.navigation.navigate('Explore')}>
 										<Text style={styles.topIconLeft}>&#xf004;</Text>
 									</TouchableOpacity>
 
-									<TouchableOpacity onPress={_openDropDownMenu()}>
+									<TouchableOpacity onPress={this.openDropDownMenu()}>
 										<Text style={styles.topIconRight}>&#xf142;</Text>
 									</TouchableOpacity>
 								</View>
@@ -64,7 +62,8 @@ class Profile extends React.Component {
 									<Text style={styles.iconButton}>&#xf141;</Text>
 								</TouchableOpacity>
 
-								<TouchableOpacity style={styles.roundedButton}>
+								<TouchableOpacity style={styles.roundedButton} 
+								onPress={()=> this.props.navigation.navigate('ChatScreen',{receiverId: this.props.user._id})}>
 									<Text style={styles.iconButton}>&#xf4ac;</Text>
 									<Text style={styles.textButton}>Start chatting</Text>
 								</TouchableOpacity>
