@@ -12,6 +12,7 @@ export class ChatsService {
 
         const docs = await Chat
             .find({ room: roomId })
+            .sort({createdAt: -1})
             .lean()
             .exec() as IChatModel[];
 

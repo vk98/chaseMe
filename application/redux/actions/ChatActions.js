@@ -16,7 +16,7 @@ export const sendMessage = (data) => async dispatch => {
     await ChatServiceAPI.sendMessage({
             text: data.message.text,
             roomId: data.roomId,
-            senderId: data.userId
+            senderId: data.senderId
         });
     return dispatch({
         type: POST_SEND_MESSAGE,

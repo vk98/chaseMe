@@ -20,13 +20,12 @@ class Profile extends React.Component {
 	};
 	constructor(props) {
 		super(props);
-		console.log(this.props.user);
 		this.props.getUserProfile(this.props.navigation.getParam('userId', null)).then(() => { this.render(); });
 	}
 
 
 	openDropDownMenu(){
-		console.warn("nothing")
+		// console.warn("nothing")
 	}
 	render() {
 		return (
