@@ -29,7 +29,7 @@ export default function (state = initialState, action) {
                 chatRooms: action.payload
             }
         case POST_SEND_MESSAGE:
-            state.currentRoom.messages.shift(action.payload);
+            state.currentRoom.messages.unshift(action.payload);
             return {
                 ...state
             }

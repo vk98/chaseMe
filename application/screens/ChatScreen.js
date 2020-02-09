@@ -42,7 +42,7 @@ class ChatScreen extends React.Component {
     }
 
     onSend(messages = []) {
-
+        // console.warn(messages);
         this.props.sendMessage({
             message: messages[0],
              roomId: this.props.currentRoom.roomId,
