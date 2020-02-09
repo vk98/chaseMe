@@ -8,13 +8,22 @@ import { ChatRoomModel as ChatRoom, IChatRoomModel } from './ChatRoomModel';
 export class ChatRoomsService {
 
     async getRoomsForId(id: string): Promise<IChatRoomModel[]> {
-        L.info(`Geting messages for ids : ${id}`);
+        L.info(`Geting rooms for user: ${id}`);
         const docs = await ChatRoom
-            .find({ participants: { $in: [id] } })
+            .find({ participants: { $in: [id] } }).populate('participants')
             .lean()
             .exec() as IChatRoomModel[];
 
+        console.log(docs);
         return docs;
+    }
+
+    async updateLastText(message) {
+        try {
+            await ChatRoom.update({ _id: message.roomId }, { $set: { lastMessage: message.text } })
+        } catch (err) {
+            L.error(`Error while trying to update last text for: ${message}`);
+        }
     }
 
     async byId(id: string): Promise<IChatRoomModel> {

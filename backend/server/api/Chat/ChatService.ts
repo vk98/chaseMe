@@ -11,7 +11,7 @@ export class ChatsService {
         L.info(`Geting messages for room: ${roomId}`);
 
         const docs = await Chat
-            .find({ room: roomId })
+            .find({ roomId: roomId })
             .lean()
             .exec() as IChatModel[];
 
