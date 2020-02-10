@@ -11,8 +11,15 @@ import {
 } from 'react-native';
 import Message from '../components/Message';
 import Demo from '../assets/data/demo.js';
+import { getChatRooms } from '../redux/actions/ChatActions';
+import { connect } from 'react-redux';
+
 
 class Messages extends React.Component {
+	constructor(props){
+		super(props);
+		this.props.getChatRooms(this.props.userData._id);
+	}
 	static navigationOptions = {
 		header: null
 	};
@@ -32,13 +39,13 @@ class Messages extends React.Component {
 						</View>
 
 						<FlatList
-							data={Demo}
+							data={this.props.chatRooms}
 							renderItem={({ item }) => (
-								<TouchableOpacity>
+								<TouchableOpacity onPress={()=> this.props.navigation.navigate('ChatScreen',{roomId: item._id})}>
 									<Message
-										image={item.image}
+										// image={}
 										name={item.name}
-										lastMessage={item.message}
+										lastMessage={item.lastMessage}
 									/>
 								</TouchableOpacity>
 							)}
@@ -79,4 +86,11 @@ const styles = StyleSheet.create({
 	}
 });
 
-export default Messages;
+const mapStateToProps = state => ({
+	chatRooms: state.chatData.chatRooms,
+	userData: {
+		_id: state.userData._id
+	}
+});
+
+export default connect(mapStateToProps, { getChatRooms })(Messages);

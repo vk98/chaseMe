@@ -1,8 +1,8 @@
 import { GET_CHAT_HISTORY, POST_SEND_MESSAGE, GET_CHAT_ROOMS, CREATE_CHAT_ROOM } from './types';
 import ChatServiceAPI from '../../services/Chat.service';
 
-export const getChatHistory = () => async dispatch => {
-    let messagesRaw = await ChatServiceAPI.getChatHistory();
+export const getChatHistory = (id) => async dispatch => {
+    let messagesRaw = await ChatServiceAPI.getChatHistory(id);
     let messages = messagesRaw.map(message => ({
         ...message, user: { _id: message.senderId }
     }));
@@ -13,7 +13,7 @@ export const getChatHistory = () => async dispatch => {
 };
 
 export const sendMessage = (data) => async dispatch => {
-    await ChatServiceAPI.sendMessage({
+    ChatServiceAPI.sendMessage({
             text: data.message.text,
             roomId: data.roomId,
             senderId: data.senderId
