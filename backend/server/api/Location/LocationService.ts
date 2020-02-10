@@ -7,11 +7,11 @@ import { LocationModel as Location, ILocationModel } from './LocationModel';
 
 export class LocationsService {
 
-  async all(): Promise<ILocationModel[]> {
+  async getAllActiveMarkers(): Promise<ILocationModel[]> {
     L.info('fetch all locations');
 
     const docs = await Location
-      .find()
+      .find().populate('userId')
       .lean()
       .exec() as ILocationModel[];
 
@@ -33,7 +33,7 @@ export class LocationsService {
     return doc;
   }
 
-  async create(locationData: ILocationModel): Promise<ILocationModel> {
+  async createNewMarker(locationData: ILocationModel): Promise<ILocationModel> {
     L.info(`create location with data ${locationData}`);
 
     const location = new Location(locationData);
@@ -43,7 +43,7 @@ export class LocationsService {
     return doc;
   }
 
-  async patch(id: string, locationData: ILocationModel): Promise<ILocationModel> {
+  async updateExistingMarker(id: string, locationData: ILocationModel): Promise<ILocationModel> {
     L.info(`update location with id ${id} with data ${locationData}`);
 
     const doc = await Location
