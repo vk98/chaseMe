@@ -6,15 +6,33 @@ import * as errors from "../../common/errors";
 import { LocationModel as Location, ILocationModel } from './LocationModel';
 
 export class LocationsService {
+  calculateDistance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;    // Math.PI / 180
+    var c = Math.cos;
+    var a = 0.5 - c((lat2 - lat1) * p) / 2 +
+      c(lat1 * p) * c(lat2 * p) *
+      (1 - c((lon2 - lon1) * p)) / 2;
 
-  async getAllActiveMarkers(): Promise<ILocationModel[]> {
+    return 12742 * Math.asin(Math.sqrt(a)); // 2 * R; R = 6371 km
+  }
+
+  async getAllActiveMarkers(userId: string): Promise<ILocationModel[]> {
     L.info('fetch all locations');
 
-    const docs = await Location
-      .find().populate('userId')
+    let now = new Date();
+    now = new Date(now.valueOf() - 300000); // 5 minutes before current time.
+    console.log(now);
+    let docs = await Location
+      .find({ updatedAt: { $gte: now } }).populate('userId', { _id: 1, name: 1, images: 1 })
       .lean()
       .exec() as ILocationModel[];
 
+    let currentMarker = docs.find(marker => marker.userId['_id'] == userId);
+    docs = docs.filter(marker => {
+      let distance = this.calculateDistance(marker.lat, marker.lon, currentMarker.lat, currentMarker.lon);
+      console.log(distance, marker.userId['_id']);
+      return marker.userId['_id'] != userId && marker.isActive && distance <= 3;
+    })
     return docs;
   }
 
@@ -52,6 +70,17 @@ export class LocationsService {
       .exec() as ILocationModel;
 
     return doc;
+  }
+  async changeActivity(userId: string, data) {
+    L.info(`Updating location for user: ${userId} with status: ${data.status ? 'active' : 'inactive'}`);
+
+    const doc = await Location
+      .findOneAndUpdate({ userId: userId }, { $set: { isActive: data.status } }, { new: true })
+      .lean()
+      .exec() as ILocationModel;
+
+    return doc;
+
   }
 
   async remove(id: string): Promise<void> {
