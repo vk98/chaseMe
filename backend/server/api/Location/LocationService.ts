@@ -23,15 +23,15 @@ export class LocationsService {
     now = new Date(now.valueOf() - 300000); // 5 minutes before current time.
     console.log(now);
     let docs = await Location
-      .find({ updatedAt: { $gte: now } }).populate('userId', { _id: 1, name: 1, images: 1 , cars: 1})
+      .find({ updatedAt: { $gte: now } }, { lat: 1, lon: 1, userId: 1 })
       .lean()
       .exec() as ILocationModel[];
 
-    let currentMarker = docs.find(marker => marker.userId['_id'] == userId);
+    let currentMarker = docs.find(marker => marker.userId == userId);
     docs = docs.filter(marker => {
       let distance = this.calculateDistance(marker.lat, marker.lon, currentMarker.lat, currentMarker.lon);
-      console.log(distance, marker.userId['_id']);
-      return marker.userId['_id'] != userId && marker.isActive && distance <= 3;
+      console.log(distance, marker.userId);
+      return marker.userId != userId && marker.isActive && distance <= 3;
     })
     return docs;
   }
