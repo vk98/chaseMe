@@ -20,7 +20,7 @@ function authenticateToken(req, res, next) {
 
 export default express.Router()
     .post('/login', passport.authenticate('local'), UserController.login)
-    .post('/', UserController.create)
+    .post('/register', UserController.registerUser)
     .post('/add-car', authenticateToken, UserController.addCar)
     .post('/send-friend-request', authenticateToken, UserController.sendFriendRequest)
     .post('/cancel-friend-request', authenticateToken, UserController.cancelFriendRequest)

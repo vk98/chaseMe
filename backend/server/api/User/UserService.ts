@@ -43,11 +43,14 @@ export class UserService {
     return doc;
   }
 
-  async create(userData: IUserModel): Promise<IUserModel> {
+  async registerUser(userData: IUserModel): Promise<IUserModel> {
     try {
-      const user = new User(userData);
-
-      const doc = await user.save() as IUserModel;
+      let sameEmailUser = await User.findOne({email: userData.email});
+      if (sameEmailUser) {
+        console.log('IFUSserviceReg')
+        return;
+      }
+      const doc = await User.create(userData) as IUserModel;
       L.info(`create user with data ${JSON.stringify(userData)}`);
       return doc;
     } catch (err) {

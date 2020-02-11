@@ -6,7 +6,7 @@ export class Controller {
 
   async getAllActiveMarkers(req: Request, res: Response, next: NextFunction) {
     try {
-      const docs = await LocationsService.getAllActiveMarkers();
+      const docs = await LocationsService.getAllActiveMarkers(req.params.id);
       return res.status(HttpStatus.OK).json(docs);
     }
     catch (err) {
@@ -26,6 +26,7 @@ export class Controller {
 
   async createNewMarker(req: Request, res: Response, next: NextFunction) {
     try {
+      req.body.updatedAt = new Date();
       const doc = await LocationsService.createNewMarker(req.body);
       return res.status(HttpStatus.CREATED).json(doc);
     }
@@ -37,6 +38,15 @@ export class Controller {
   async updateExistingMarker(req: Request, res: Response, next: NextFunction) {
     try {
       const doc = await LocationsService.updateExistingMarker(req.params.id, req.body);
+      return res.status(HttpStatus.OK).json(doc);
+    }
+    catch (err) {
+      return next(err);
+    }
+  }
+  async changeActivity(req: Request, res: Response, next: NextFunction) {
+    try {
+      const doc = await LocationsService.changeActivity(req.params.id, req.body);
       return res.status(HttpStatus.OK).json(doc);
     }
     catch (err) {

@@ -102,10 +102,14 @@ export class Controller {
     }
   }
 
-  async create(req: Request, res: Response, next: NextFunction) {
+  async registerUser(req: Request, res: Response, next: NextFunction) {
     try {
       req.body.password = await bcrypt.hash(req.body.password, 10);
-      const doc = await UserService.create(req.body);
+      const doc = await UserService.registerUser(req.body);
+      console.log(doc);
+      if (!doc) {
+        return res.status(HttpStatus.CONFLICT).json('User with the same email already exists.');
+      }
       return res.status(HttpStatus.CREATED).json(doc);
     }
     catch (err) {
