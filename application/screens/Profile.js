@@ -36,7 +36,7 @@ class Profile extends React.Component {
 							<ImageBackground source={{uri: this.props.user.images[0] }} style={styles.photo}>
 								<View style={styles.top}>
 									<TouchableOpacity onPress={()=> this.props.navigation.navigate('Explore')}>
-										<Text style={styles.topIconLeft}>&#xf004;</Text>
+										<Ionicons name="ios-arrow-back" style={styles.topIconLeft}></Ionicons>
 									</TouchableOpacity>
 
 									<TouchableOpacity onPress={this.openDropDownMenu()}>
@@ -97,8 +97,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		color: '#FFF',
 		paddingLeft: 20,
-		marginTop: -20,
-		transform: [{ rotate: '90deg' }]
 	},
 	topIconRight: {
 		fontFamily: 'tinderclone',
