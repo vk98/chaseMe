@@ -18,13 +18,16 @@
 
 
 ## TODO:
-- map
-- location service 
+Map
+- map - done
+- location service - done
 - map navigation + icon 
+- request with active in radius of 1.5km
+- get Active markers aka location.updatedAt in last 5 minutes. Add property in location model active(true, false)
+- take a look at push notifications
+
 - 
-- Will use Socket.io so we should implement it in the backend and as a client in the react-native
-- This will use for sockets https://medium.com/@gethylgeorge/using-socket-io-in-react-redux-app-to-handle-real-time-data-c0e734297795
-Map screen
+
 - every player updates constantly his location via the api and send it into the server
 - server returns everyone only the near markers(set radius)(it will be calculated by formula or library)
 - Ping-ing another player will make a ping request (senderUserId, receiverUserId, timestamp, message)
@@ -38,7 +41,9 @@ Match screen
 - The friends will be listed in users collections and the polling function will compare the data if a new friend has come
 
 Message Screen 
-- list all the friends with chat history
-- button chat to new friend
-- chat Screen opens for the clicked user  
+- list all the friends with chat history - done
+- button chat to new friend - done
+- chat Screen opens for the clicked user - done
+
+
 
