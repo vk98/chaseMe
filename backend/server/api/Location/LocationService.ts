@@ -23,7 +23,7 @@ export class LocationsService {
     now = new Date(now.valueOf() - 300000); // 5 minutes before current time.
     console.log(now);
     let docs = await Location
-      .find({ updatedAt: { $gte: now } }).populate('userId', { _id: 1, name: 1, images: 1 })
+      .find({ updatedAt: { $gte: now } }).populate('userId', { _id: 1, name: 1, images: 1 , cars: 1})
       .lean()
       .exec() as ILocationModel[];
 
@@ -62,10 +62,10 @@ export class LocationsService {
   }
 
   async updateExistingMarker(id: string, locationData: ILocationModel): Promise<ILocationModel> {
-    L.info(`update location with id ${id} with data ${locationData}`);
+    L.info(`update location with userId ${id} with data ${locationData}`);
 
     const doc = await Location
-      .findOneAndUpdate({ _id: id }, { $set: locationData }, { new: true })
+      .findOneAndUpdate({ userId: id }, { $set: locationData }, { new: true, upsert: true })
       .lean()
       .exec() as ILocationModel;
 

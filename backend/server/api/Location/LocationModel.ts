@@ -19,7 +19,7 @@ const schema = new Schema({
   userId: {
     type: String, ref: 'users'
   },
-  isActive: Boolean,
+  isActive: { type: Boolean, default: true },
   createdAt: Date,
   updatedAt: Date
 },
