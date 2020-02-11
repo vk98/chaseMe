@@ -12,6 +12,6 @@ export default express.Router()
     .post('/accept-friend-request', authenticateToken, UserController.acceptFriendInvitation)
     .post('/decline-friend-request', authenticateToken, UserController.declineFriendInvitation)
     .get('/', authenticateToken, UserController.all)
-    .get('/:id', UserController.byId)
+    .get('/:id', authenticateToken, UserController.getUserById)
     .patch('/:id', UserController.update)
     .delete('/:id', UserController.remove);

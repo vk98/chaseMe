@@ -28,10 +28,8 @@ export class UserService {
     return docs;
   }
 
-  async byId(id: string): Promise<IUserModel> {
+  async getUserById(id: string): Promise<IUserModel> {
     L.info(`fetch user with id ${id}`);
-
-    if (!mongooseTypes.ObjectId.isValid(id)) throw new errors.HttpError(HttpStatus.BAD_REQUEST);
 
     const doc = await User
       .findOne({ _id: id }).populate('cars')

@@ -92,9 +92,9 @@ export class Controller {
     }
   }
 
-  async byId(req: Request, res: Response, next: NextFunction) {
+  async getUserById(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await UserService.byId(req.params.id);
+      const doc = await UserService.getUserById(req.params.id);
       return res.status(HttpStatus.OK).json(doc);
     }
     catch (err) {
