@@ -13,10 +13,11 @@ export interface ILocationModel extends mongoose.Document {
 };
 
 const schema = new Schema({
-  name: String,
-  brand: String,
-  model: String,
-  hp: Number
+  lat: Number,
+  lon: Number,
+  userId: String,
+  createdAt: Date,
+  updatedAt: Date
 },
 {
     timestamps: true

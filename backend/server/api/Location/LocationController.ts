@@ -4,9 +4,9 @@ import * as HttpStatus from 'http-status-codes';
 
 export class Controller {
 
-  async all(req: Request, res: Response, next: NextFunction) {
+  async getAllActiveMarkers(req: Request, res: Response, next: NextFunction) {
     try {
-      const docs = await LocationsService.all();
+      const docs = await LocationsService.getAllActiveMarkers();
       return res.status(HttpStatus.OK).json(docs);
     }
     catch (err) {
@@ -24,9 +24,9 @@ export class Controller {
     }
   }
 
-  async create(req: Request, res: Response, next: NextFunction) {
+  async createNewMarker(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await LocationsService.create(req.body);
+      const doc = await LocationsService.createNewMarker(req.body);
       return res.status(HttpStatus.CREATED).json(doc);
     }
     catch (err) {
@@ -34,9 +34,9 @@ export class Controller {
     }
   }
 
-  async patch(req: Request, res: Response, next: NextFunction) {
+  async updateExistingMarker(req: Request, res: Response, next: NextFunction) {
     try {
-      const doc = await LocationsService.patch(req.params.id, req.body);
+      const doc = await LocationsService.updateExistingMarker(req.params.id, req.body);
       return res.status(HttpStatus.OK).json(doc);
     }
     catch (err) {
