@@ -5,22 +5,21 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { View } from 'native-base';
 import { getChatHistory, sendMessage, createChatRoom, getChatRooms } from '../redux/actions/ChatActions';
-
+import { Ionicons } from '@expo/vector-icons';
 class ChatScreen extends React.Component {
     constructor(props) {
         super(props);
         this.receiverId = this.props.navigation.getParam('receiverId', null)
-        this.roomId = this.props.navigation.getParam('roomId', null);
-        if (this.roomId) {
-            this.props.getChatHistory(this.roomId);
+        let roomId = this.props.navigation.getParam('roomId', null);
+        if (roomId) {
+            this.props.getChatHistory(roomId);
         }
         else if (this.receiverId) {
             this.props.getChatRooms(this.props.userData._id).then(() => {
-                let chatRoomIndex = this.props.chatRooms.findIndex(elem => elem.participants.some(e => e == this.props.userData._id)
-                    && elem.participants.some(e => e == this.receiverId) && elem.participants.length == 2);
+                let chatRoomIndex = this.props.chatRooms.findIndex(elem => elem.participants.some(e => e._id == this.props.userData._id)
+                    && elem.participants.some(e => e._id == this.receiverId) && elem.participants.length == 2);
                 if (chatRoomIndex > -1) {
-
-                    this.props.getChatHistory(this.props.getChatRooms(chatRoomIndex)._id);
+                    this.props.getChatHistory(this.props.chatRooms[chatRoomIndex]._id);
                 }
                 else {
 
@@ -29,9 +28,9 @@ class ChatScreen extends React.Component {
                         "participants": [this.receiverId, this.props.userData._id]
                     }).then(() => {
 
-                        let chatRoomIndex = this.props.chatRooms.findIndex(elem => elem.participants.some(e => e == this.props.userData._id)
-                            && elem.participants.some(e => e == this.receiverId) && elem.participants.length == 2);
-                        this.props.getChatHistory(this.props.getChatRooms(chatRoomIndex)._id);
+                        let chatRoomIndex = this.props.chatRooms.findIndex(elem => elem.participants.some(e => e._id == this.props.userData._id)
+                            && elem.participants.some(e => e._id == this.receiverId) && elem.participants.length == 2);
+                        this.props.getChatHistory(this.props.chatRooms[chatRoomIndex]._id);
                     })
                 }
             })
@@ -52,8 +51,8 @@ class ChatScreen extends React.Component {
         return (
             <View style={styles.container}>
                 <View style={styles.top}>
-                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Messages')}>
-                        <Text style={styles.topIconLeft}>&#xf004;</Text>
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('Chat')}>
+                        <Ionicons name="ios-arrow-back" style={styles.topIconLeft}></Ionicons>
                     </TouchableOpacity>
                     <Text style={styles.title}>Name</Text>
                     <TouchableOpacity>
@@ -101,8 +100,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#000',
         paddingLeft: 20,
-        marginTop: -25,
-        transform: [{ rotate: '90deg' }]
     },
 });
 

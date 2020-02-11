@@ -14,24 +14,54 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getMapMarkers } from '../redux/actions/MapActions';
 import { getCurrentUserData } from '../redux/actions/UserActions';
+import * as Location from 'expo-location';
+import * as Permissions from 'expo-permissions';
 
 class Map extends React.Component {
-
+	initRegion = {
+		latitude: 37.78825,
+		longitude: 42.4324,
+		latitudeDelta: 0.0922,
+		longitudeDelta: 0.0421,
+	};
+	state = {
+		region: null,
+		lastLat: null,
+		lastLong: null
+	}
 	constructor(props) {
 		super(props);
+
 		this.props.getMapMarkers();
 		// this.myPosition = {};
-		let initRegion = {
-			latitude: 37.78825,
-			longitude: 42.4324,
-			latitudeDelta: 0.0922,
-			longitudeDelta: 0.0421,
-		};
-		this.state = {
-			region: initRegion
-		}
-		this.props.getCurrentUserData().then(data=>console.warn('data is loaded')).catch(err=>console.warn(`There is error: ${err}`)); //TODO - remove
+		this.props.getCurrentUserData().then(data => console.warn('data is loaded')).catch(err => console.warn(`There is error: ${err}`)); //TODO - remove
 		//this.onRegionChange = this.onRegionChange.bind(this);
+	}
+
+
+	
+	async componentDidMount() {
+		this.setState({
+			region: null,
+			lastLat: null,
+			lastLong: null
+		});
+		let { status } = await Permissions.askAsync(Permissions.LOCATION);
+		if (status !== 'granted') {
+			console.warn('Permission to access location was denied')
+		}
+		setInterval(async()=>{
+			let location = await Location.getCurrentPositionAsync({});
+			let region = {
+				latitude: location.latitude,
+				longitude: location.longitude,
+				latitudeDelta: 0.00922 * 1.5,
+				longitudeDelta: 0.00421 * 1.5
+			}
+			this.onRegionChange(region, region.latitude, region.longitude);
+		}, 5000)
+		
+
 	}
 
 	static navigationOptions = {
@@ -42,8 +72,15 @@ class Map extends React.Component {
 		// this.props.region = nextProps.region ? nextProps.region : null;
 		// this.props.myPosition = nextProps.myPosition ? nextProps.myPosition : null;
 	}
-	onRegionChange = (region) => {
-		//this.setState({ region });
+	onRegionChange(region, lastLat, lastLong) {
+		console.log(region, lastLat, lastLong, this.state);
+		
+		this.setState({
+			region: region,
+			// If there are no new values set the current ones
+			lastLat: lastLat || this.state.lastLat,
+			lastLong: lastLong || this.state.lastLong
+		});
 	}
 	render() {
 		return (
@@ -52,8 +89,21 @@ class Map extends React.Component {
 					style={styles.map}
 					provider="google"
 					region={this.state.region}
-					onRegionChange={this.onRegionChange}>
-					{this.props.markers.map((marker,index) => (
+					onRegionChange={this.onRegionChange}
+					showsUserLocation={true}
+					followUserLocation={true}>
+					<Marker
+						coordinate={{
+							latitude: (this.state.lastLat + 0.00050) || -36.82339,
+							longitude: (this.state.lastLong + 0.00050) || -73.03569,
+						}}>
+						<View>
+							<Text style={{ color: '#000' }}>
+								{this.state.lastLong} / {this.state.lastLat}
+							</Text>
+						</View>
+					</Marker>
+					{this.props.markers.map((marker, index) => (
 						<Marker
 							key="index"
 							coordinate={{ latitude: marker.latlng.lat, longitude: marker.latlng.lng }}
@@ -78,14 +128,14 @@ const styles = StyleSheet.create({
 		justifyContent: 'flex-end',
 		alignItems: 'center',
 		flex: 1
-	  },
-	  map: {
+	},
+	map: {
 		position: 'absolute',
 		top: 0,
 		left: 0,
 		right: 0,
 		bottom: 0,
-	  },
+	},
 	bg: {
 		flex: 1,
 		resizeMode: 'cover',

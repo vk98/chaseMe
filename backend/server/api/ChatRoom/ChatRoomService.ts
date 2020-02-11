@@ -10,7 +10,11 @@ export class ChatRoomsService {
     async getRoomsForId(id: string): Promise<IChatRoomModel[]> {
         L.info(`Geting rooms for user: ${id}`);
         const docs = await ChatRoom
-            .find({ participants: { $in: [id] } }).populate('participants')
+            .find({ participants: { $in: [id] } })
+            .populate({
+                path: 'participants',
+                select: 'name images _id'
+            })
             .lean()
             .exec() as IChatRoomModel[];
 
