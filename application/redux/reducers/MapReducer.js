@@ -1,4 +1,4 @@
-import { GET_MAP_MARKERS } from '../actions/types';
+import { GET_MAP_MARKERS, UPDATE_USER_LOCATION_ACTIVITY, UPDATE_USER_LOCATION, UPDATE_ON_REGION_CHANGE } from '../actions/types';
 
 const initialState = {
     markers: [
@@ -11,7 +11,19 @@ const initialState = {
             }
         }
     ],
-    myPosition: {},
+    myPosition: {
+        lastLat: null,
+		lastLong: null
+    },
+    region: {
+        latitude: null,
+        longitude: null,
+        latitudeDelta: 0.00922 * 1.5,
+        longitudeDelta: 0.00421 * 1.5
+    },
+    locationObserver: null,
+    activityStatus: true
+    
 };
 
 export default function (state = initialState, action) {
@@ -21,6 +33,25 @@ export default function (state = initialState, action) {
                 ...state,
                 markers: action.payload
             };
+        case UPDATE_USER_LOCATION:
+            return {
+                ...state,
+                ...action.payload
+            }
+        case UPDATE_USER_LOCATION_ACTIVITY:
+            return {
+                ...state,
+                ...action.payload
+            }
+        case UPDATE_ON_REGION_CHANGE:
+            return{
+                ...state,
+                region: action.payload.region || state.region,
+                myPosition: {
+                    lastLat: action.payload.lastLat || state.lastLat,
+                    lastLong: action.payload.lastLong || state.lastLong
+                }
+            }
         default:
             return state;
     }
