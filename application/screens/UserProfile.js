@@ -52,16 +52,7 @@ class UserProfile extends React.Component {
 						info4={''}
 					/>
 
-					<View style={styles.actions}>
-						<TouchableOpacity style={styles.circledButton}>
-							<Text style={styles.iconButton}>&#xf141;</Text>
-						</TouchableOpacity>
-
-						<TouchableOpacity style={styles.roundedButton}>
-							<Text style={styles.iconButton}>&#xf4ac;</Text>
-							<Text style={styles.textButton}>Start chatting</Text>
-						</TouchableOpacity>
-					</View>
+					
 				</ScrollView>
 			</ImageBackground>
 		);

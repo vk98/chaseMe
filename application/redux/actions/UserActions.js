@@ -1,5 +1,5 @@
 import UserServiceAPI from '../../services/User.service';
-import { GET_USER_DATA, UPDATE_USER_DATA, USER_LOGIN, USER_LOGOUT, GET_USERS_FRIENDS, GET_USER_PROFILE } from '../actions/types';
+import { GET_USER_DATA, UPDATE_USER_DATA, USER_LOGIN, USER_LOGOUT, GET_USERS_FRIENDS, GET_USER_PROFILE, GET_USERS_FRIENDS_REQUESTS } from '../actions/types';
 import { AsyncStorage } from 'react-native';
 
 export const getUserData = () => async dispatch => {
@@ -11,10 +11,14 @@ export const getUserData = () => async dispatch => {
 };
 
 export const getCurrentUserData = () => async dispatch => {
-    //let id = JSON.parse(await AsyncStorage.getItem('user'))._id;
-    let id = "5e10ccbbc833de5e28f44a77";
+    let id = JSON.parse(await AsyncStorage.getItem('user'))._id;
+    // let id = "5e10ccbbc833de5e28f44a77";
     let userData = await UserServiceAPI.getUser(id);
     await AsyncStorage.setItem('user', JSON.stringify(userData));
+    dispatch({
+        type: GET_USERS_FRIENDS_REQUESTS,
+        payload: userData.awaitingFriendRequests
+    })
     return dispatch({
         type: GET_USER_DATA,
         payload: userData
@@ -67,6 +71,8 @@ export const getUsersFriends = () => async dispatch => {
     }
 }
 
+
+
 export const logoutUser = () => async dispatch => {
     await UserServiceAPI.logoutUser(id);
     await AsyncStorage.clear();
@@ -77,10 +83,7 @@ export const logoutUser = () => async dispatch => {
 
 export const getUserProfile = (id) => async dispatch => {
     let user = await UserServiceAPI.getUser(id);
-    return dispatch({
-        type: GET_USER_PROFILE,
-        payload: user
-    });
+    return user;
 
 
 }

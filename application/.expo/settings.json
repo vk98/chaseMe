@@ -1,8 +1,8 @@
 {
+  "urlRandomness": "bw-yxm",
   "hostType": "lan",
   "lanType": "ip",
   "dev": true,
   "minify": false,
-  "urlRandomness": "i3-54x",
   "https": false
 }

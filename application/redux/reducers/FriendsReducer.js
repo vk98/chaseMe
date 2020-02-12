@@ -1,7 +1,8 @@
-import { GET_USERS_FRIENDS } from '../actions/types';
+import { GET_USERS_FRIENDS, GET_USERS_FRIENDS_REQUESTS } from '../actions/types';
 
 const initialState = {
-    friends: []
+    friends: [],
+    awaitingRequests: []
 };
 
 export default function (state = initialState, action) {
@@ -11,6 +12,11 @@ export default function (state = initialState, action) {
                 ...state,
                 friends: action.payload
             };
+        case GET_USERS_FRIENDS_REQUESTS:
+            return {
+                ...state,
+                awaitingRequests: action.payload
+            }
         default:
             return state;
     }

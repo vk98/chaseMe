@@ -15,6 +15,10 @@ import Demo from '../assets/data/demo.js';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getUsersFriends } from '../redux/actions/UserActions';
+import { Button } from 'react-native-paper';
+import UsersServiceAPI from '../services/User.service';
+import { Ionicons } from '@expo/vector-icons';
+
 
 class Friends extends React.Component {
 	static navigationOptions = {
@@ -33,6 +37,9 @@ class Friends extends React.Component {
 				<View style={styles.container}>
 					<ScrollView>
 						<View style={styles.top}>
+						<TouchableOpacity onPress={()=> this.props.navigation.navigate('Explore')}>
+										<Ionicons name="ios-arrow-back" style={styles.topIconLeft}></Ionicons>
+									</TouchableOpacity>
 							<Text style={styles.title}>Friends</Text>
 							<TouchableOpacity>
 								<Text style={styles.icon}>&#xf142;</Text>
@@ -50,6 +57,29 @@ class Friends extends React.Component {
 										status={"Online"}
 										variant
 									/>
+								</TouchableOpacity>
+							)}
+							keyExtractor={(item, index) => index.toString()}
+						/>
+						<FlatList
+							numColumns={2}
+							data={this.props.awaitingRequests}
+							renderItem={({ item }) => (
+								<TouchableOpacity onPress={()=> this._onItemPressed(item._id)}>
+									<CardItem
+										image={{uri:item.images[0]}}
+										name={item.name}
+										status={"Online"}
+										variant
+									/>
+									<TouchableOpacity onPress={()=> UsersServiceAPI.acceptFriendRequest(this.props.userData._id, item._id)}>
+										<Button>Accept</Button>
+									</TouchableOpacity>
+									<TouchableOpacity onPress={()=> UsersServiceAPI.declineFriendRequest(this.props.userData._id, item._id)}>
+										<Button>Decline</Button>
+									</TouchableOpacity>
+									
+
 								</TouchableOpacity>
 							)}
 							keyExtractor={(item, index) => index.toString()}
@@ -93,7 +123,13 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		color: '#363636',
 		paddingRight: 10
-	}
+	},
+	topIconLeft: {
+		fontFamily: 'tinderclone',
+		fontSize: 20,
+		color: '#000',
+		paddingLeft: 20,
+	},
 });
 
 Friends.propTypes = {
@@ -102,7 +138,9 @@ Friends.propTypes = {
 }
 
 const mapStateToProps = state => ({ 
-	friends: state.friendsData.friends 
+	userData: state.userData,
+	friends: state.friendsData.friends,
+	awaitingRequests: state.friendsData.awaitingRequests 
 });
 
 export default connect(mapStateToProps, { getUsersFriends })(Friends);

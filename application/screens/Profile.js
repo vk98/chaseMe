@@ -12,17 +12,36 @@ import ProfileItem from '../components/ProfileItem';
 import Demo from '../assets/data/demo.js';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getUserProfile } from '../redux/actions/UserActions';
+// import { getUserProfile } from '../redux/actions/UserActions';
+import UsersServiceAPI from '../services/User.service';
 import { Ionicons } from '@expo/vector-icons';
 class Profile extends React.Component {
 	static navigationOptions = {
 		header: null
 	};
+	state={
+		userProfile: {
+			_id: '',
+			images: [],
+			name: '',
+			email: '',
+			friends: [],
+			cars: [],
+			address: '',
+			description: '',
+		}
+	};
 	constructor(props) {
 		super(props);
-		this.props.getUserProfile(this.props.navigation.getParam('userId', null)).then(() => { this.render(); });
-	}
 
+	}
+	async componentDidMount(){
+		let id = this.props.navigation.getParam('userId', null);
+		let data = await UsersServiceAPI.getUser(id);
+			this.setState({
+				userProfile: data	
+			});
+	}
 
 	openDropDownMenu(){
 		// console.warn("nothing")
@@ -30,10 +49,10 @@ class Profile extends React.Component {
 	render() {
 		return (
 					<ImageBackground
-						source={{uri: this.props.user.images[0] }}
+						source={{uri: this.state.userProfile.images[0] }}
 						style={styles.bg}>
 						<ScrollView style={styles.container}>
-							<ImageBackground source={{uri: this.props.user.images[0] }} style={styles.photo}>
+							<ImageBackground source={{uri: this.state.userProfile.images[0] }} style={styles.photo}>
 								<View style={styles.top}>
 									<TouchableOpacity onPress={()=> this.props.navigation.navigate('Explore')}>
 										<Ionicons name="ios-arrow-back" style={styles.topIconLeft}></Ionicons>
@@ -46,7 +65,7 @@ class Profile extends React.Component {
 							</ImageBackground>
 
 							<ProfileItem
-								name={this.props.user.name}
+								name={this.state.userProfile.name}
 								age={''}
 								location={''}
 								info1={''}
@@ -56,12 +75,12 @@ class Profile extends React.Component {
 							/>
 
 							<View style={styles.actions}>
-								<TouchableOpacity style={styles.circledButton}>
-									<Text style={styles.iconButton}>&#xf141;</Text>
+								<TouchableOpacity style={styles.circledButton} onPress={()=>{UsersServiceAPI.sendFriendRequest(this.props.user._id, this.state.userProfile._id)}}>
+									<Text style={styles.iconButton}>Add Friend</Text>
 								</TouchableOpacity>
 
 								<TouchableOpacity style={styles.roundedButton} 
-								onPress={()=> this.props.navigation.navigate('ChatScreen',{receiverId: this.props.user._id})}>
+								onPress={()=> this.props.navigation.navigate('ChatScreen',{receiverId: this.state.userProfile._id})}>
 									<Text style={styles.iconButton}>&#xf4ac;</Text>
 									<Text style={styles.textButton}>Start chatting</Text>
 								</TouchableOpacity>
@@ -116,7 +135,7 @@ const styles = StyleSheet.create({
 		paddingLeft: 5
 	},
 	circledButton: {
-		width: 50,
+		width: 150,
 		height: 50,
 		borderRadius: 25,
 		backgroundColor: '#7444C0',
@@ -136,12 +155,12 @@ const styles = StyleSheet.create({
 	}
 });
 
-Profile.propTypes = {
-	getUserProfile: PropTypes.func.isRequired,
-	user: PropTypes.object
-}
+// Profile.propTypes = {
+// 	getUserProfile: PropTypes.func.isRequired,
+// 	user: PropTypes.object
+// }
 const mapStateToProps = state => ({
-	user: state.profileData.user
+	user: state.userData
 });
 
-export default connect(mapStateToProps, { getUserProfile })(Profile);
+export default connect(mapStateToProps, {} )(Profile);
