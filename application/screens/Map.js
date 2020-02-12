@@ -13,60 +13,37 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getMapMarkers, onRegionChange, changeUserLocationMarkerAcitvity, updateUserLocationMarker } from '../redux/actions/MapActions';
-import { getCurrentUserData } from '../redux/actions/UserActions';
+import { loginUser } from '../redux/actions/UserActions';
+import { getUserProfile } from '../services/User.service'
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
 class Map extends React.Component {
-	// initRegion = {
-	// 	latitude: 37.78825,
-	// 	longitude: 42.4324,
-	// 	latitudeDelta: 0.0922,
-	// 	longitudeDelta: 0.0421,
-	// };
-	// state = {
-	// 	region: null,
-	// 	lastLat: null,
-	// 	lastLong: null
-	// }
 	constructor(props) {
 		super(props);
-		this.props.getCurrentUserData().then(data => console.warn('data is loaded')).catch(err => console.warn(`There is error: ${err}`)); //TODO - remove
-		this.props.updateUserLocationMarker(this.props.userData._id)
-		this.props.getMapMarkers(this.props.userData._id);
+		
 	}
 
-
-
-	// async componentDidMount() {
-	// 	this.setState({
-	// 		region: null,
-	// 		lastLat: null,
-	// 		lastLong: null
-	// 	});
-	// 	let { status } = await Permissions.askAsync(Permissions.LOCATION);
-	// 	if (status !== 'granted') {
-	// 		console.warn('Permission to access location was denied')
-	// 	} else {
-	// 		let location = await Location.getCurrentPositionAsync({});
-	// 		let region = {
-	// 			latitude: location.coords.latitude,
-	// 			longitude: location.coords.longitude,
-	// 			latitudeDelta: 0.00922 * 1.5,
-	// 			longitudeDelta: 0.00421 * 1.5
-	// 		}
-	// 		this.onRegionChange(region, region.latitude, region.longitude);
-	// 		setInterval(async () => {
-	// 			let location = await Location.getCurrentPositionAsync({});
-	// 			let region = undefined;
-	// 			this.props.onRegionChange(region, location.coords.latitude, location.coords.longitude);
-	// 		}, 5000)
-	// 	}
-	// }
-
+	componentDidMount(){
+		let locationObserver = setInterval(() => {
+			this.props.updateUserLocationMarker(this.props.userData._id)
+			this.props.getMapMarkers(this.props.userData._id);
+		}, 10000);
+		this.setState({
+			locationObserver: locationObserver
+		})
+	}
+	componentWillUnmount() {
+		clearInterval(this.state.locationObserver)
+	}
 	static navigationOptions = {
 		header: null
 	};
+	onPressMarker(userId) {
+		this.props.navigation.navigate('Profile', {
+			userId: userId
+		})
+	}
 
 	render() {
 		return (
@@ -80,13 +57,13 @@ class Map extends React.Component {
 					followUserLocation={true}>
 					<Circle
 						center={{ latitude: this.props.mapData.myPosition.lastLat || 42, longitude: this.props.mapData.myPosition.lastLong || 23 }}
-						radius={1500}
+						radius={3000}
 						strokeWidth={1}
 						strokeColor={'#1a66ff'}
 						fillColor={'rgba(230,238,255,0.5)'}
 
 					/>
-					<Marker
+					{/* <Marker
 						coordinate={{
 							latitude: (this.props.mapData.myPosition.lastLat + 0.00050) || -36.82339,
 							longitude: (this.props.mapData.myPosition.lastLong + 0.00050) || -73.03569,
@@ -96,14 +73,19 @@ class Map extends React.Component {
 								{this.props.mapData.myPosition.lastLong} / {this.props.mapData.myPosition.lastLat}
 							</Text>
 						</View>
-					</Marker>
+					</Marker> */}
 					{this.props.mapData.markers.map((marker, index) => (
 						<Marker
 							key="index"
 							coordinate={{ latitude: marker.latlng.lat, longitude: marker.latlng.lng }}
-							// title={marker.title}
-							// description={marker.description}
-						/>
+							userId={marker.userId}
+							onPress={this.onPressMarker.bind(this, marker.userId)}
+						// onCalloutPress={this.onCalloutPressMarker.bind(marker.userId)}
+						// title={marker.title}
+						// description={marker.description}
+						>
+
+						</Marker>
 					))}
 
 				</MapView>
@@ -111,6 +93,7 @@ class Map extends React.Component {
 		);
 	}
 }
+
 
 const styles = StyleSheet.create({
 	container: {
@@ -149,18 +132,19 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		color: '#363636',
 		paddingRight: 10
+	},
+	markerView: {
+		backgroundColor: "#FFF",
+		width: 150,
+		height: 150,
+
 	}
 });
 
-// Map.propTypes = {
-// 	getMapMarkers: PropTypes.func.isRequired,
-// 	markers: PropTypes.array.isRequired,
-// 	myPosition: PropTypes.any
-// };
 
 const mapStateToProps = state => ({
 	mapData: state.mapData,
 	userData: state.userData
 });
 
-export default connect(mapStateToProps, { getMapMarkers, getCurrentUserData, onRegionChange, changeUserLocationMarkerAcitvity, updateUserLocationMarker })(Map);
+export default connect(mapStateToProps, { getMapMarkers, loginUser, onRegionChange, changeUserLocationMarkerAcitvity, updateUserLocationMarker })(Map);

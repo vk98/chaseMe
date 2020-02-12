@@ -44,14 +44,7 @@ export default function (state = initialState, action) {
         case USER_LOGIN:
             return{
                 ...state,
-                _id: action.payload._id,
-                images: action.payload.images,
-                name: action.payload.name,
-                email: action.payload.email,
-                friends: action.payload.friends,
-                cars: action.payload.cars,
-                address: action.payload.address,
-                description: action.payload.description,
+                ...action.payload
             }
         default:
             return state;

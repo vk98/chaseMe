@@ -43,14 +43,13 @@ class UserProfile extends React.Component {
 					</ImageBackground>
 
 					<ProfileItem
-						matches={Demo[7].match}
 						name={this.props.name}
-						age={Demo[7].age}
+						age={''}
 						location={this.props.address}
 						info1={this.props.description}
-						info2={Demo[7].info2}
-						info3={Demo[7].info3}
-						info4={Demo[7].info4}
+						info2={''}
+						info3={''}
+						info4={''}
 					/>
 
 					<View style={styles.actions}>

@@ -40,15 +40,18 @@ class Messages extends React.Component {
 
 						<FlatList
 							data={this.props.chatRooms}
-							renderItem={({ item }) => (
+							renderItem={({ item }) => {
+								let oppositePerson = item.participants.find(e=>e._id != this.props.userData._id);
+								return (
 								<TouchableOpacity onPress={()=> this.props.navigation.navigate('ChatScreen',{roomId: item._id})}>
 									<Message
-										// image={}
-										name={item.name}
+										image={{uri: oppositePerson.images[0]}}
+										name={oppositePerson.name}
 										lastMessage={item.lastMessage}
 									/>
 								</TouchableOpacity>
-							)}
+							);
+						}}
 							keyExtractor={(item, index) => index.toString()}
 						/>
 					</ScrollView>

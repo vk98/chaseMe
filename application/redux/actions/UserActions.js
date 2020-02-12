@@ -35,17 +35,19 @@ export const loginUser = (email, password) => async dispatch => {
         let data = await UserServiceAPI.loginUser(email, password);
         await AsyncStorage.setItem('user', JSON.stringify(data.user));
         await AsyncStorage.setItem('Auth', data.accessToken);
+        return dispatch({
+            type: USER_LOGIN,
+            payload: data.user
+        })
     }catch(err){
         if(err){
             dispatch({
-                type: USER_LOGIN,
+                type: USER_LOGIN_FAILED,
                 payload: "Wrong email or password"
             });
         }
         throw new Error("Wrong email or password");
     }
-    
-    
 }
 
 export const getUsersFriends = () => async dispatch => {

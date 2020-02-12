@@ -27,7 +27,7 @@ const LoginScreen = (props) => {
     }
     try {
       await props.loginUser(email.value, password.value);
-      navigation.navigate('Main');
+      navigation.navigate('Explore');
     } catch (error) {
       // console.warn(error);
     }

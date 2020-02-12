@@ -13,7 +13,7 @@ import Demo from '../assets/data/demo.js';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getUserProfile } from '../redux/actions/UserActions';
-
+import { Ionicons } from '@expo/vector-icons';
 class Profile extends React.Component {
 	static navigationOptions = {
 		header: null
@@ -46,14 +46,13 @@ class Profile extends React.Component {
 							</ImageBackground>
 
 							<ProfileItem
-								matches={Demo[7].match}
 								name={this.props.user.name}
-								age={Demo[7].age}
-								location={Demo[7].location}
-								info1={Demo[7].info1}
-								info2={Demo[7].info2}
-								info3={Demo[7].info3}
-								info4={Demo[7].info4}
+								age={''}
+								location={''}
+								info1={''}
+								info2={''}
+								info3={''}
+								info4={''}
 							/>
 
 							<View style={styles.actions}>

@@ -10,11 +10,10 @@ const Dashboard = ({ navigation }) => (
     <Logo />
     <Header>Let’s start</Header>
     <Paragraph>
-      Your amazing app starts here. Open you favourite code editor and start
-      editing this project.
+      Log in and connect with other car fans.
     </Paragraph>
-    <Button mode="outlined" onPress={() => navigation.navigate('Swipe')}>
-      Logout
+    <Button mode="outlined" onPress={() => navigation.navigate('LoginScreen')}>
+      Login
     </Button>
   </Background>
 );

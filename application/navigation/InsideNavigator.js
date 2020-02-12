@@ -8,10 +8,10 @@ import ChatScreen from '../screens/ChatScreen';
 
 const InsideNavigator = createStackNavigator(
   {
-    UserProfile: UserProfile,
     Profile: Profile,
     Friends: Friends,
-    ChatScreen: ChatScreen
+    ChatScreen: ChatScreen,
+    UserProfile: UserProfile
   },
   {
     headerMode: 'none',

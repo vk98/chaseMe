@@ -38,7 +38,7 @@ class UserSettings extends React.Component {
                             </TouchableOpacity>
                         </View>
                         <View style={styles.userShowup}>
-                            <Image source={Demo[7].image} style={styles.avatar} />
+                            <Image source={{uri: this.props.images[0]}} style={styles.avatar} />
                             <Text style={styles.userShowupName}>{this.props.name}</Text>
                         </View>
                         <SettingsButton icon={{name: "ios-person"}} name="Personal details" navigation={this.props.navigation} goTo='UserProfile'></SettingsButton>
