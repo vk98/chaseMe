@@ -32,7 +32,7 @@ export class UserService {
     L.info(`fetch user with id ${id}`);
 
     const doc = await User
-      .findOne({ _id: id }).populate('cars')
+      .findOne({ _id: id }).populate('cars').populate('friendRequests')
       .lean()
       .exec() as IUserModel;
 
