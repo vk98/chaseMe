@@ -72,10 +72,6 @@ export class Controller {
     try {
       let userId = req.body.userId;
       let friendId = req.body.friendId;
-      let isFriends = (await UserService.findById(friendId)).friends.includes(userId);
-      if (isFriends) {
-        res.status(500).send();
-      }
       let query1 = { $push: { "awaitingFriendResponse": `${friendId}` } };
       let query2 = { $push: { "friendRequests": `${userId}` }, $set: { hasNewFriendRequest: true } };
       await UserService.update(userId, query1);
