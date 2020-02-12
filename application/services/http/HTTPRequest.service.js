@@ -27,19 +27,19 @@ const Request = async function (options, isHeader = true) {
   }
 
   const onError = function (error) {
-    console.debug('Request Failed:', error.config);
+    //console.debug('Request Failed:', error.config);
 
     if (error.response) {
       // Request was made but server responded with something
       // other than 2xx
-      console.debug('Status:', error.response.status);
-      console.debug('Data:', error.response.data);
-      console.debug('Headers:', error.response.headers);
+      // console.debug('Status:', error.response.status);
+      // console.debug('Data:', error.response.data);
+      // console.debug('Headers:', error.response.headers);
 
     } else {
       // Something else happened while setting up the request
       // triggered the error
-      console.debug('Error Message:', error.message);
+      // console.debug('Error Message:', error.message);
     }
 
     return Promise.reject(error.response || error.message);

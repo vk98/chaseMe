@@ -53,6 +53,19 @@ export class UserServiceAPI {
         });
     }
 
+    /** 
+     * @param { string } email
+     * @param { string } password
+     * @param { string } name
+     */
+    registerUser(email, password, name){
+        return Request({
+            url: `/users/register`,
+            method: "POST",
+            data: { email: email, password: password, name }
+        });
+    }
+
     logoutUser(){
         return Request({
             url: `/user/logout`,

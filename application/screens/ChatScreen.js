@@ -7,6 +7,10 @@ import { View } from 'native-base';
 import { getChatHistory, sendMessage, createChatRoom, getChatRooms } from '../redux/actions/ChatActions';
 import { Ionicons } from '@expo/vector-icons';
 class ChatScreen extends React.Component {
+    state = {
+        room: {}, 
+        oppositePerson: {}  
+      }
     constructor(props) {
         super(props);
         this.receiverId = this.props.navigation.getParam('receiverId', null)
@@ -46,7 +50,17 @@ class ChatScreen extends React.Component {
             senderId: this.props.userData._id
         })
     }
-
+    componentDidMount(){
+        if(this.props.currentRoom.roomId){
+            let room = this.props.chatRooms.find(e=> e._id == this.props.currentRoom.roomId);
+            let oppositePerson = room.participants.find(e=>e._id != this.props.userData._id);
+            this.setState({
+              room: room, 
+              oppositePerson: oppositePerson  
+            })
+        }
+        
+    }
     render() {
         return (
             <View style={styles.container}>
@@ -54,7 +68,9 @@ class ChatScreen extends React.Component {
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Chat')}>
                         <Ionicons name="ios-arrow-back" style={styles.topIconLeft}></Ionicons>
                     </TouchableOpacity>
-                    <Text style={styles.title}>Name</Text>
+                    <TouchableOpacity>
+                        <Text style={styles.title}>{this.state.oppositePerson.name}</Text>
+                    </TouchableOpacity>
                     <TouchableOpacity>
                         <Text style={styles.icon}>&#xf142;</Text>
                     </TouchableOpacity>

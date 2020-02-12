@@ -13,12 +13,14 @@ import {
   nameValidator,
 } from '../../core/utils';
 
+import { registerUser } from '../../services/User.service';
+
 const RegisterScreen = ({ navigation }) => {
   const [name, setName] = useState({ value: '', error: '' });
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
-  const _onSignUpPressed = () => {
+  const _onSignUpPressed = async () => {
     const nameError = nameValidator(name.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
@@ -29,7 +31,7 @@ const RegisterScreen = ({ navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     }
-
+    await registerUser(email.value, password.value, name.value);
     navigation.navigate('Dashboard');
   };
 

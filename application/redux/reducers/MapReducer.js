@@ -16,10 +16,10 @@ const initialState = {
 		lastLong: null
     },
     region: {
-        latitude: null,
-        longitude: null,
-        latitudeDelta: 0.00922 * 1.5,
-        longitudeDelta: 0.00421 * 1.5
+        latitude: 42.65,
+        longitude: 23.38,
+        latitudeDelta: 0.01922 * 1.0,
+        longitudeDelta: 0.01421 * 1.0
     },
     locationObserver: null,
     activityStatus: true
@@ -36,7 +36,10 @@ export default function (state = initialState, action) {
         case UPDATE_USER_LOCATION:
             return {
                 ...state,
-                ...action.payload
+                myPosition: {
+                    lastLat: action.payload.lat,
+                    lastLong: action.payload.lon
+                }
             }
         case UPDATE_USER_LOCATION_ACTIVITY:
             return {
@@ -46,11 +49,7 @@ export default function (state = initialState, action) {
         case UPDATE_ON_REGION_CHANGE:
             return{
                 ...state,
-                region: action.payload.region || state.region,
-                myPosition: {
-                    lastLat: action.payload.lastLat || state.lastLat,
-                    lastLong: action.payload.lastLong || state.lastLong
-                }
+                region: action.payload.region || state.region
             }
         default:
             return state;

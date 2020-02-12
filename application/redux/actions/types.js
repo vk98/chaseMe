@@ -17,6 +17,7 @@ export const GET_USER_DATA = 'GET_USER_DATA';
 export const UPDATE_USER_DATA = 'UPDATE_USER_DATA';
 export const USER_LOGIN = 'USER_LOGIN';
 export const USER_LOGOUT = 'USER_LOGOUT';
+export const USER_LOGIN_FAILED = 'USER_LOGIN_FAILED';
 
 //Friends actions
 export const GET_USERS_FRIENDS = 'GET_USERS_FRIENDS';

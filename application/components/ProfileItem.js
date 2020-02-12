@@ -5,11 +5,6 @@ class ProfileItem extends React.Component {
 	render() {
 		return (
 			<View style={styles.container}>
-				<View style={styles.matches}>
-					<Text style={styles.matchesText}>
-						&#xe800; {this.props.matches}% Match!
-					</Text>
-				</View>
 
 				<Text style={styles.name}>{this.props.name}</Text>
 
