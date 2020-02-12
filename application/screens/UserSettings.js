@@ -11,7 +11,7 @@ import { Button, Content } from 'native-base';
 import SettingsButton from '../components/SettingsButton';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getUserData, setUserData } from '../redux/actions/UserActions';
+import { getUserData, setUserData, logoutUser } from '../redux/actions/UserActions';
 import Demo from '../assets/data/demo.js';
 import {theme} from '../core/theme';
 
@@ -41,9 +41,12 @@ class UserSettings extends React.Component {
                             <Image source={{uri: this.props.images[0]}} style={styles.avatar} />
                             <Text style={styles.userShowupName}>{this.props.name}</Text>
                         </View>
-                        <SettingsButton icon={{name: "ios-person"}} name="Personal details" navigation={this.props.navigation} goTo='UserProfile'></SettingsButton>
+                        <SettingsButton icon={{name: "ios-person"}} name="Personal details" navigation={this.props.navigation} goTo='Explore'></SettingsButton>
                         <SettingsButton icon={{name: "logo-model-s"}} name="Cars" navigation={this.props.navigation} goTo='Swipe'></SettingsButton>
                         <SettingsButton icon={{name: "ios-people"}} name="Friends" navigation={this.props.navigation} goTo='Friends'></SettingsButton>
+                        <TouchableOpacity onPress={()=>{this.props.logoutUser()}}>
+                            <SettingsButton icon={{name: "ios-log-out"}} name="Logout" navigation={this.props.navigation} goTo='LoginScreen'></SettingsButton>
+                        </TouchableOpacity>
                     </ScrollView>
                 </View>
             </ImageBackground>
@@ -121,4 +124,4 @@ const mapStateToProps = state => ({
     description: state.userData.description
 });
 
-export default connect(mapStateToProps, { setUserData, getUserData })(UserSettings);
+export default connect(mapStateToProps, { setUserData, getUserData, logoutUser })(UserSettings);

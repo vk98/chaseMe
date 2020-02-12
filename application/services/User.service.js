@@ -13,6 +13,39 @@ export class UserServiceAPI {
             url: `/users/${id}`,
             method: 'GET'
         });
+    }   
+
+    sendFriendRequest(senderId, receiverId){
+        return Request({
+            url: `/users/send-friend-request`,
+            method: "POST",
+            data: {
+                userId: senderId,
+                friendId: receiverId
+            }
+        })
+    }
+
+    acceptFriendRequest(senderId,receiverId){
+        return Request({
+            url: `/users/accept-friend-request`,
+            method: "POST",
+            data: {
+                userId: senderId,
+                friendId: receiverId
+            }
+        })
+    }
+
+    declineFriendRequest(senderId,receiverId){
+        return Request({
+            url: `/users/decline-friend-request`,
+            method: "POST",
+            data: {
+                userId: senderId,
+                friendId: receiverId
+            }
+        })
     }
 
     /**@param { { email: string } } data *///TODO

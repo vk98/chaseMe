@@ -14,7 +14,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getMapMarkers, onRegionChange, changeUserLocationMarkerAcitvity, updateUserLocationMarker } from '../redux/actions/MapActions';
 import { loginUser } from '../redux/actions/UserActions';
-import { getUserProfile } from '../services/User.service'
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 
