@@ -9,21 +9,22 @@ import { Ionicons } from '@expo/vector-icons';
 class ChatScreen extends React.Component {
     state = {
         room: {}, 
-        oppositePerson: {}  
+        oppositePerson: {},
+        chatObserver: null
       }
     constructor(props) {
         super(props);
         this.receiverId = this.props.navigation.getParam('receiverId', null)
         let roomId = this.props.navigation.getParam('roomId', null);
         if (roomId) {
-            this.props.getChatHistory(roomId);
+                this.props.getChatHistory(roomId);
         }
         else if (this.receiverId) {
             this.props.getChatRooms(this.props.userData._id).then(() => {
                 let chatRoomIndex = this.props.chatRooms.findIndex(elem => elem.participants.some(e => e._id == this.props.userData._id)
                     && elem.participants.some(e => e._id == this.receiverId) && elem.participants.length == 2);
                 if (chatRoomIndex > -1) {
-                    this.props.getChatHistory(this.props.chatRooms[chatRoomIndex]._id);
+                        this.props.getChatHistory(this.props.chatRooms[chatRoomIndex]._id);
                 }
                 else {
 
@@ -34,7 +35,7 @@ class ChatScreen extends React.Component {
 
                         let chatRoomIndex = this.props.chatRooms.findIndex(elem => elem.participants.some(e => e._id == this.props.userData._id)
                             && elem.participants.some(e => e._id == this.receiverId) && elem.participants.length == 2);
-                        this.props.getChatHistory(this.props.chatRooms[chatRoomIndex]._id);
+                                this.props.getChatHistory(this.props.chatRooms[chatRoomIndex]._id);
                     })
                 }
             })
@@ -54,12 +55,18 @@ class ChatScreen extends React.Component {
         if(this.props.currentRoom.roomId){
             let room = this.props.chatRooms.find(e=> e._id == this.props.currentRoom.roomId);
             let oppositePerson = room.participants.find(e=>e._id != this.props.userData._id);
+            
+                this.props.getChatHistory(this.props.currentRoom.roomId);
             this.setState({
-              room: room, 
-              oppositePerson: oppositePerson  
-            })
+                room: room, 
+                oppositePerson: oppositePerson
+              })
         }
         
+    }
+
+    componentWillUnmount(){
+        clearInterval(this.state.chatObserver);
     }
     render() {
         return (

@@ -3,11 +3,11 @@ import L from '../../common/logger'
 import * as HttpStatus from 'http-status-codes';
 import * as errors from "../../common/errors";
 
-import { ChatModel as Chat, IChatModel } from './ChatModel';
+import { ChatModel as Chat, IChatModel, IChatModelWithUser } from './ChatModel';
 
 export class ChatsService {
 
-    async messagesForRoomId(roomId: string): Promise<IChatModel[]> {
+    async messagesForRoomId(roomId: string): Promise<IChatModelWithUser[]> {
         L.info(`Geting messages for room: ${roomId}`);
 
         const docs = await Chat
@@ -16,7 +16,9 @@ export class ChatsService {
             .lean()
             .exec() as IChatModel[];
 
-        return docs;
+        return docs.map(message => ({
+            ...message, user: { _id: message.senderId }
+        }));
     }
 
     async byId(id: string): Promise<IChatModel> {

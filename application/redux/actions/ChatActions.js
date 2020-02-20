@@ -1,15 +1,21 @@
 import { GET_CHAT_HISTORY, POST_SEND_MESSAGE, GET_CHAT_ROOMS, CREATE_CHAT_ROOM } from './types';
 import ChatServiceAPI from '../../services/Chat.service';
+import { MakeSocketAction } from 'react-redux-socket/client';
 
 export const getChatHistory = (id) => async dispatch => {
-    let messagesRaw = await ChatServiceAPI.getChatHistory(id);
-    let messages = messagesRaw.map(message => ({
-        ...message, user: { _id: message.senderId }
+    // let messagesRaw = await ChatServiceAPI.getChatHistory(id);
+    // let messages = messagesRaw.map(message => ({
+    //     ...message, user: { _id: message.senderId }
+    // }));
+    // return dispatch({
+    //     type: GET_CHAT_HISTORY,
+    //     payload: messages
+    // });
+    console.warn("get chat history")
+    return dispatch(MakeSocketAction({
+        type: "LISTEN_MESSAGES_FROM_SERVER",
+        payload: id
     }));
-    return dispatch({
-        type: GET_CHAT_HISTORY,
-        payload: messages
-    });
 };
 
 export const sendMessage = (data) => async dispatch => {

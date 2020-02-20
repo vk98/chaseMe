@@ -2,9 +2,9 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 6204,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "packagerPid": 17668,
+  "expoServerNgrokUrl": "https://4j-rhw.vikatop.application.exp.direct",
+  "packagerNgrokUrl": "https://packager.4j-rhw.vikatop.application.exp.direct",
+  "ngrokPid": 29032,
   "webpackServerPort": null
 }
